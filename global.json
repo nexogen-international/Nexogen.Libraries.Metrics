@@ -1,0 +1,15 @@
+{
+  "projects": [
+    "Nexogen.Libraries.Metrics",
+    "Nexogen.Libraries.Metrics.Example",
+    "Nexogen.Libraries.Metrics.ExampleWeb",
+    "Nexogen.Libraries.Metrics.Extensions",
+    "Nexogen.Libraries.Metrics.Prometheus",
+    "Nexogen.Libraries.Metrics.Prometheus.AspCore",
+    "Nexogen.Libraries.Metrics.Prometheus.PushGateway",
+    "Nexogen.Libraries.Metrics.UnitTests"
+  ],
+  "sdk": {
+    "version": "1.0.4"
+  }
+}

@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Version>2.0.0-Undefined</Version>
+    <TargetFramework Condition=" '$(OS)' != 'Windows_NT' ">netstandard1.6</TargetFramework>
+    <TargetFrameworks Condition=" '$(OS)' == 'Windows_NT' ">netstandard1.6;net452</TargetFrameworks>  
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    
+    <Description>Nexogen Metrics API implementation for Prometheus</Description>
+    <PackageTags>Metrics;Prometheus</PackageTags>
+    <Authors>Nexogen</Authors>
+    <Copyright>Nexogen 2017</Copyright>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Nexogen.Libraries.Metrics\Nexogen.Libraries.Metrics.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.6' ">
+    <PackageReference Include="System.Collections.Concurrent" Version="4.3.0" />
+    <PackageReference Include="System.Diagnostics.Process" Version="4.3.0" />
+    <PackageReference Include="System.Text.RegularExpressions" Version="4.3.0" />
+    <PackageReference Include="System.Threading" Version="4.3.0" />
+  </ItemGroup>
+  
+</Project>

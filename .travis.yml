@@ -1,0 +1,8 @@
+language: csharp
+mono: none
+dotnet: 1.0.4
+dist: trusty
+script:
+ - dotnet restore
+ - dotnet build -c Release
+ - cd ./Nexogen.Libraries.Metrics.UnitTests && dotnet test

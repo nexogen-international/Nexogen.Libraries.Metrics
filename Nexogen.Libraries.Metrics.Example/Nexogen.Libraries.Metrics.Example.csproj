@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework Condition=" '$(OS)' != 'Windows_NT' ">netcoreapp1.1</TargetFramework>
+    <TargetFrameworks Condition=" '$(OS)' == 'Windows_NT' ">netcoreapp1.1;net452</TargetFrameworks>  
+    <OutputType>Exe</OutputType>    
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Nexogen.Libraries.Metrics.Prometheus.PushGateway\Nexogen.Libraries.Metrics.Prometheus.PushGateway.csproj" />
+    <ProjectReference Include="..\Nexogen.Libraries.Metrics\Nexogen.Libraries.Metrics.csproj" />
+    <ProjectReference Include="..\Nexogen.Libraries.Metrics.Prometheus\Nexogen.Libraries.Metrics.Prometheus.csproj" />
+    <ProjectReference Include="..\Nexogen.Libraries.Metrics.Extensions\Nexogen.Libraries.Metrics.Extensions.csproj" />
+  </ItemGroup>
+
+</Project>
