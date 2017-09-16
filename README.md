@@ -1,6 +1,6 @@
 # Nexogen.Libraries.Metrics
 
-Library for collecting application metrics in .Net and exporting them to Prometheus
+Library for collecting application metrics in .Net and exporting them to [Prometheus](https://prometheus.io/)
 
 [![Build Status](https://travis-ci.org/nexogen-international/Nexogen.Libraries.Metrics.svg?branch=master)](https://travis-ci.org/nexogen-international/Nexogen.Libraries.Metrics)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/nexogen-international/Nexogen.Libraries.Metrics/master/LICENSE)
