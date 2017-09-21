@@ -19,15 +19,14 @@ script:
  - dotnet restore
  - dotnet build -c Release
  - cd ./Nexogen.Libraries.Metrics.UnitTests && dotnet test && cd ..
+ - dotnet pack ./Nexogen.Libraries.Metrics -c Release --version-suffix $TRAVIS_BUILD_NUMBER
+ - dotnet pack ./Nexogen.Libraries.Metrics.Extensions -c Release --version-suffix $TRAVIS_BUILD_NUMBER
+ - dotnet pack ./Nexogen.Libraries.Metrics.Prometheus -c Release --version-suffix $TRAVIS_BUILD_NUMBER
+ - dotnet pack ./Nexogen.Libraries.Metrics.Prometheus.AspCore -c Release --version-suffix $TRAVIS_BUILD_NUMBER
+ - dotnet pack ./Nexogen.Libraries.Metrics.Prometheus.PushGateway -c Release --version-suffix $TRAVIS_BUILD_NUMBER
 
-deploy:
-  provider: script
-  script:
-    - dotnet pack ./Nexogen.Libraries.Metrics -c Release --version-suffix $TRAVIS_BUILD_NUMBER
-    - dotnet pack ./Nexogen.Libraries.Metrics.Extensions -c Release --version-suffix $TRAVIS_BUILD_NUMBER
-    - dotnet pack ./Nexogen.Libraries.Metrics.Prometheus -c Release --version-suffix $TRAVIS_BUILD_NUMBER
-    - dotnet pack ./Nexogen.Libraries.Metrics.Prometheus.AspCore -c Release --version-suffix $TRAVIS_BUILD_NUMBER
-    - dotnet pack ./Nexogen.Libraries.Metrics.Prometheus.PushGateway -c Release --version-suffix $TRAVIS_BUILD_NUMBER
-    - dotnet nuget push **/*.nupkg -s https://nuget.org -k $NUGET_API_KEY -verbosity detailed
-  on:
-    branch: master
+# deploy:
+#  provider: script
+#  script: dotnet nuget push **/*.nupkg -s https://nuget.org -k $NUGET_API_KEY
+#  on:
+#    branch: master
