@@ -1,16 +1,30 @@
 language: csharp
-mono: none
-dotnet: 1.0.4
+os:
+  - linux
+
+# .NET CLI require Ubuntu 14.04
+sudo: required
 dist: trusty
+# Ensure that .NET Core is installed
+dotnet: 1.0.4
+# Ensure that Mono is not installed
+mono: none
+
+env:
+   # Set the DOTNET_SKIP_FIRST_TIME_EXPERIENCE environment variable to stop wasting time caching packages
+ - DOTNET_SKIP_FIRST_TIME_EXPERIENCE=true
+   # Disable sending usage data to Microsoft
+ - DOTNET_CLI_TELEMETRY_OPTOUT=true
+
 script:
  - dotnet restore
  - dotnet build -c Release
  - cd ./Nexogen.Libraries.Metrics.UnitTests && dotnet test && cd ..
- - dotnet pack ./Nexogen.Libraries.Metrics -c Release
- - dotnet pack ./Nexogen.Libraries.Metrics.Extensions -c Release
- - dotnet pack ./Nexogen.Libraries.Metrics.Prometheus -c Release
- - dotnet pack ./Nexogen.Libraries.Metrics.Prometheus.AspCore -c Release
- - dotnet pack ./Nexogen.Libraries.Metrics.Prometheus.PushGateway -c Release
+ - dotnet pack ./Nexogen.Libraries.Metrics -c Release --version-suffix $TRAVIS_BUILD_NUMBER
+ - dotnet pack ./Nexogen.Libraries.Metrics.Extensions -c Release --version-suffix $TRAVIS_BUILD_NUMBER
+ - dotnet pack ./Nexogen.Libraries.Metrics.Prometheus -c Release --version-suffix $TRAVIS_BUILD_NUMBER
+ - dotnet pack ./Nexogen.Libraries.Metrics.Prometheus.AspCore -c Release --version-suffix $TRAVIS_BUILD_NUMBER
+ - dotnet pack ./Nexogen.Libraries.Metrics.Prometheus.PushGateway -c Release --version-suffix $TRAVIS_BUILD_NUMBER
 deploy:
  - provider: script
    script: dotnet nuget push **/*.nupkg -s https://nuget.org -k $NUGET_API_KEY
