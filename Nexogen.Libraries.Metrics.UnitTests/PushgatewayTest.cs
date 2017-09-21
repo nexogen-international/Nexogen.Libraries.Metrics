@@ -1,5 +1,4 @@
-﻿using Nexogen.Libraries.Prometheus.PushGateway;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
@@ -7,6 +6,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 using FluentAssertions;
+
+using Nexogen.Libraries.Metrics.Prometheus.PushGateway;
 using Nexogen.Libraries.Metrics.Prometheus;
 
 namespace Nexogen.Libraries.Metrics.UnitTests

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Nexogen.Libraries.Prometheus.PushGateway
+namespace Nexogen.Libraries.Metrics.Prometheus.PushGateway
 {
     internal class PushGatewayException : Exception
     {

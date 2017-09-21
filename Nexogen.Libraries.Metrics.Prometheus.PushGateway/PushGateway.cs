@@ -6,7 +6,7 @@ using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace Nexogen.Libraries.Prometheus.PushGateway
+namespace Nexogen.Libraries.Metrics.Prometheus.PushGateway
 {
     /// <summary>
     /// Pushgateway exporter for Prometheus.

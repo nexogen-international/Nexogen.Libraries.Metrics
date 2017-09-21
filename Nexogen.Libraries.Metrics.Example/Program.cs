@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Threading;
-using Nexogen.Libraries.Metrics.Prometheus;
 using Nexogen.Libraries.Metrics.Extensions;
-using Nexogen.Libraries.Prometheus.PushGateway;
+using Nexogen.Libraries.Metrics.Prometheus;
+using Nexogen.Libraries.Metrics.Prometheus.PushGateway;
 
 namespace Nexogen.Libraries.Metrics.Example
 {
