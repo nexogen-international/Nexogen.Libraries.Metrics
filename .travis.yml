@@ -5,4 +5,14 @@ dist: trusty
 script:
  - dotnet restore
  - dotnet build -c Release
- - cd ./Nexogen.Libraries.Metrics.UnitTests && dotnet test
+ - cd ./Nexogen.Libraries.Metrics.UnitTests && dotnet test && cd ..
+ - dotnet pack ./Nexogen.Libraries.Metrics -c Release
+ - dotnet pack ./Nexogen.Libraries.Metrics.Extensions -c Release
+ - dotnet pack ./Nexogen.Libraries.Metrics.Prometheus -c Release
+ - dotnet pack ./Nexogen.Libraries.Metrics.Prometheus.AspCore -c Release
+ - dotnet pack ./Nexogen.Libraries.Metrics.Prometheus.PushGateway -c Release
+deploy:
+ - provider: script
+   script: dotnet nuget push **/*.nupkg -s https://nuget.org -k $NUGET_API_KEY
+   on:
+     branch: master
