@@ -25,7 +25,7 @@ namespace Nexogen.Libraries.Metrics.Prometheus.AspCore
             context.HttpContext.Response.StatusCode = 200;
             context.HttpContext.Response.Headers["Content-Type"] = "text/plain; version=0.0.4; charset=utf-8";
 
-            using (var writer = new StreamWriter(context.HttpContext.Response.Body, PrometheusConventions.UTF8, 128, true))
+            using (var writer = new StreamWriter(context.HttpContext.Response.Body, PrometheusConventions.PrometheusEncoding, 128, true))
             {
                 writer.NewLine = "\n";
 
