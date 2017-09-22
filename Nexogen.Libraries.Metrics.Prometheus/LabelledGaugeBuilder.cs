@@ -30,7 +30,7 @@ namespace Nexogen.Libraries.Metrics.Prometheus
 
         public ILabelledGaugeBuilder LabelNames(params string[] labelNames)
         {
-            if (labelNames.Any(l => !NameRegex.IsMatch(l)))
+            if (labelNames.Any(l => !IsValidLabel(l)))
             {
                 throw new ArgumentException("Label names must follow prometheus conventions");
             }
@@ -42,7 +42,7 @@ namespace Nexogen.Libraries.Metrics.Prometheus
 
         public ILabelledGaugeBuilder Name(string name)
         {
-            if (!NameRegex.IsMatch(name))
+            if (!IsValidName(name))
             {
                 throw new ArgumentException("Name must follow prometheus conventions");
             }

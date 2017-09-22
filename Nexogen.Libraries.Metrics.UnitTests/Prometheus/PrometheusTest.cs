@@ -14,6 +14,41 @@ namespace Nexogen.Libraries.Metrics.UnitTests.Prometheus
         }
 
         [Theory]
+        [InlineData("name")]
+        [InlineData("the_name")]
+        [InlineData(":name:")]
+        [InlineData("name14")]
+        [InlineData("__name_")]
+        [InlineData("NamE")]
+        public void IsValidName_should_return_true_for_valid_names(string name)
+        {
+            Assert.True(PrometheusConventions.IsValidName(name));
+        }
+
+        [Theory]
+        [InlineData("9label")]
+        [InlineData("")]
+        [InlineData("this:isnotvalid")]
+        [InlineData(":label")]
+        [InlineData("__label")]
+        [InlineData("___label")]
+        public void IsValidLabel_should_return_false_for_invalid_labels(string label)
+        {
+            Assert.False(PrometheusConventions.IsValidLabel(label));
+        }
+
+        [Theory]
+        [InlineData("name")]
+        [InlineData("the_name")]
+        [InlineData("name14")]
+        [InlineData("_name_")]
+        [InlineData("LabeL")]
+        public void IsValidLabel_should_return_true_for_valid_labels(string label)
+        {
+            Assert.True(PrometheusConventions.IsValidName(label));
+        }
+
+        [Theory]
         [InlineData("le")]
         public void IsValidHistogramName_should_return_false_for_invalid_names(string name)
         {
