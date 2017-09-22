@@ -23,4 +23,5 @@ deploy:
  provider: script
  script: chmod +x ./deploy.sh && ./deploy.sh $NUGET_API_KEY $TRAVIS_BUILD_NUMBER
  on:
+   tags: true
    branch: master
