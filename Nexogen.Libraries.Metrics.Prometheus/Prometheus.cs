@@ -10,8 +10,10 @@ namespace Nexogen.Libraries.Metrics.Prometheus
 {
     public static class PrometheusConventions
     {
-        public static readonly Regex NameRegex = new Regex("^[a-zA-Z_:][a-zA-Z0-9_:]*$");
-        public static readonly Encoding UTF8 = new UTF8Encoding(false);
+        private static readonly Regex NameRegex = new Regex("^[a-zA-Z_:][a-zA-Z0-9_:]*$");
+        private static readonly Regex LabelRegex = new Regex("^[a-zA-Z_][a-zA-Z0-9_]*$");
+
+        public static readonly Encoding PrometheusEncoding = new UTF8Encoding(false);
 
         public static string BuildLabels(string[] labelNames, string[] labels)
         {
@@ -74,6 +76,11 @@ namespace Nexogen.Libraries.Metrics.Prometheus
         public static bool IsValidName(string name)
         {
             return NameRegex.IsMatch(name);
+        }
+
+        public static bool IsValidLabel(string label)
+        {
+            return !label.StartsWith("__") && LabelRegex.IsMatch(label);
         }
 
         public static bool AreValidHistogramNames(IEnumerable<string> names)

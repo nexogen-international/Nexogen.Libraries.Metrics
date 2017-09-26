@@ -21,7 +21,7 @@ namespace Nexogen.Libraries.Metrics.Prometheus
 
         public Histogram(IBucket[] buckets, string help, string name, string[] labelNames, string[] labels)
         {
-            if (!NameRegex.IsMatch(name))
+            if (!IsValidName(name))
             {
                 throw new ArgumentException($"Invalid metric name: {name}");
             }

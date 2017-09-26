@@ -25,7 +25,7 @@ namespace Nexogen.Libraries.Metrics.Prometheus
                 coreclrExporter.Collect();
             }
 
-            using (var writer = new StreamWriter(output, PrometheusConventions.UTF8, 4096, true))
+            using (var writer = new StreamWriter(output, PrometheusConventions.PrometheusEncoding, 4096, true))
             {
                 writer.NewLine = "\n";
 
