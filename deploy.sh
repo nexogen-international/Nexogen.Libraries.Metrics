@@ -5,9 +5,9 @@ set -e
 
 if [ -z "$TRAVIS_TAG" ]
 then
-	$ARGS="-c Release --version-suffix ${TRAVIS_BUILD_NUMBER}"
+	ARGS="-c Release --version-suffix ${TRAVIS_BUILD_NUMBER}"
 else
-	$ARGS="-c Release /p:PackageVersion=${TRAVIS_TAG#v}"
+	ARGS="-c Release /p:PackageVersion=${TRAVIS_TAG#v}"
 fi
 
 dotnet pack ./Nexogen.Libraries.Metrics $ARGS
