@@ -3,12 +3,17 @@
 #exit if any command fails
 set -e
 
-NUGET_API_KEY=$1
-NUGET_VERSION_SUFFIX=$2
+if [ -z "$TRAVIS_TAG" ]
+then
+	$ARGS="-c Release --version-suffix ${TRAVIS_BUILD_NUMBER}"
+else
+	$ARGS="-c Release /p:PackageVersion=${TRAVIS_TAG}"
+fi
 
-dotnet pack ./Nexogen.Libraries.Metrics -c Release --version-suffix $NUGET_VERSION_SUFFIX
-dotnet pack ./Nexogen.Libraries.Metrics.Extensions -c Release --version-suffix $NUGET_VERSION_SUFFIX
-dotnet pack ./Nexogen.Libraries.Metrics.Prometheus -c Release --version-suffix $NUGET_VERSION_SUFFIX
-dotnet pack ./Nexogen.Libraries.Metrics.Prometheus.AspCore -c Release --version-suffix $NUGET_VERSION_SUFFIX
-dotnet pack ./Nexogen.Libraries.Metrics.Prometheus.PushGateway -c Release --version-suffix $NUGET_VERSION_SUFFIX
+dotnet pack ./Nexogen.Libraries.Metrics $ARGS
+dotnet pack ./Nexogen.Libraries.Metrics.Extensions $ARGS
+dotnet pack ./Nexogen.Libraries.Metrics.Prometheus $ARGS
+dotnet pack ./Nexogen.Libraries.Metrics.Prometheus.AspCore $ARGS
+dotnet pack ./Nexogen.Libraries.Metrics.Prometheus.PushGateway $ARGS
+
 dotnet nuget push **/*.nupkg -s https://nuget.org -k $NUGET_API_KEY

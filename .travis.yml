@@ -16,12 +16,12 @@ env:
     - DOTNET_CLI_TELEMETRY_OPTOUT: 1
 
 script:
-  - chmod +x ./build.sh && ./build.sh
+  - bash ./build.sh
 
 deploy:
  skip_cleanup: true
  provider: script
- script: chmod +x ./deploy.sh && ./deploy.sh $NUGET_API_KEY $TRAVIS_BUILD_NUMBER
+ script: bash ./deploy.sh $NUGET_API_KEY $TRAVIS_BUILD_NUMBER
  on:
    tags: true
    branch: master
