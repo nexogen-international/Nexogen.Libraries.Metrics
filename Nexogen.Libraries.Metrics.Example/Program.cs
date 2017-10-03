@@ -43,7 +43,12 @@ namespace Nexogen.Libraries.Metrics.Example
                 .LabelNames("solver")
                 .Register();
 
-            var pgw = new PushGateway(new Uri("http://127.0.0.1:9091"));
+
+            var pgw = new PushGateway(
+                new Uri("http://127.0.0.1:9091"), 
+                "example_app",
+                new List<Tuple<string, string>> {Tuple.Create("environment", "test")}
+                );
 
             Task.Run(async () =>
             {

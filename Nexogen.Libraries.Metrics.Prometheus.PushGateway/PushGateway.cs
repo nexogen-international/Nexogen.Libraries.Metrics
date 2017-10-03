@@ -1,5 +1,6 @@
 ﻿using Nexogen.Libraries.Metrics.Prometheus;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.Http;
@@ -15,15 +16,23 @@ namespace Nexogen.Libraries.Metrics.Prometheus.PushGateway
     {
         private static readonly Regex validLabel = new Regex("[a-zA-Z_:][a-zA-Z0-9_:]*");
         private readonly HttpClient client;
+        private readonly string instance;
+        private readonly IEnumerable<Tuple<string, string>> defaultLabels;
 
         /// <summary>
         /// Create a new PushGateway exporter.
         /// </summary>
         /// <param name="endpoint">The URL of the pushgateway</param>
-        public PushGateway(Uri endpoint)
+        /// <param name="instance">The name of the individual source of metrics, usually corresponding to a single process</param>
+        /// <param name="defaultLabels">Labels which are attached to all metrics exposed on this instance</param>
+        public PushGateway(Uri endpoint,
+            string instance = null, 
+            IEnumerable<Tuple<string, string>> defaultLabels = null
+        )
         {
-            this.client = new HttpClient();
-            this.client.BaseAddress = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
+            this.client = new HttpClient {BaseAddress = endpoint ?? throw new ArgumentNullException(nameof(endpoint))};
+            this.instance = instance;
+            this.defaultLabels = defaultLabels;
         }
 
         /// <summary>
@@ -112,7 +121,24 @@ namespace Nexogen.Libraries.Metrics.Prometheus.PushGateway
 
         private HttpRequestMessage CreateRequestMessage(IExposable metrics, string job, Stream stream)
         {
-            var path = String.Format("/metrics/job/{0}", WebUtility.UrlEncode(job));
+            var path = string.Format("/metrics/job/{0}", WebUtility.UrlEncode(job));
+            
+            if (!string.IsNullOrEmpty(instance))
+            {
+                path = string.Format("{0}/instance/{1}", path, WebUtility.UrlEncode(instance));
+            }
+            
+            if (defaultLabels != null)
+            {
+                foreach (var pair in defaultLabels)
+                {
+                    if (string.IsNullOrEmpty(pair?.Item1) || string.IsNullOrEmpty(pair.Item2))
+                    {
+                        continue;
+                    }
+                    path = string.Format("{0}/{1}/{2}", path, WebUtility.UrlEncode(pair.Item1), WebUtility.UrlEncode(pair.Item2));
+                }
+            }
 
             var request = new HttpRequestMessage(HttpMethod.Post, path);
             request.Content = new StreamContent(stream);
