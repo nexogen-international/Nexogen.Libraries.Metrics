@@ -5,15 +5,15 @@ set -e
 
 if [ -z "$TRAVIS_TAG" ]
 then
-	ARGS="-c Release --version-suffix ${TRAVIS_BUILD_NUMBER}"
+	ARGS="-c Release /p:VersionSuffix=${TRAVIS_BUILD_NUMBER}"
 else
-	ARGS="-c Release /p:PackageVersion=${TRAVIS_TAG#v}"
+	ARGS="-c Release /p:PackageVersionNumber=${TRAVIS_TAG#v}"
 fi
 
-dotnet pack ./Nexogen.Libraries.Metrics $ARGS
-dotnet pack ./Nexogen.Libraries.Metrics.Extensions $ARGS
-dotnet pack ./Nexogen.Libraries.Metrics.Prometheus $ARGS
-dotnet pack ./Nexogen.Libraries.Metrics.Prometheus.AspCore $ARGS
-dotnet pack ./Nexogen.Libraries.Metrics.Prometheus.PushGateway $ARGS
+dotnet msbuild /t:Restore;Pack ./Nexogen.Libraries.Metrics $ARGS
+dotnet msbuild /t:Restore;Pack ./Nexogen.Libraries.Metrics.Extensions $ARGS
+dotnet msbuild /t:Restore;Pack ./Nexogen.Libraries.Metrics.Prometheus $ARGS
+dotnet msbuild /t:Restore;Pack ./Nexogen.Libraries.Metrics.Prometheus.AspCore $ARGS
+dotnet msbuild /t:Restore;Pack ./Nexogen.Libraries.Metrics.Prometheus.PushGateway $ARGS
 
 dotnet nuget push **/*.nupkg -s https://nuget.org -k $NUGET_API_KEY
