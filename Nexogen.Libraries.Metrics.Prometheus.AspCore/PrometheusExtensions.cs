@@ -1,10 +1,5 @@
 ﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Nexogen.Libraries.Metrics.Prometheus.AspCore
 {
@@ -14,7 +9,8 @@ namespace Nexogen.Libraries.Metrics.Prometheus.AspCore
         /// Configure DI for using the Prometheus Metrics library.
         /// </summary>
         /// <param name="services"></param>
-        public static void AddPrometheus(this IServiceCollection services)
+        /// <returns></returns>
+        public static IServiceCollection AddPrometheus(this IServiceCollection services)
         {
             var prometheus = new PrometheusMetrics();
 
@@ -22,6 +18,8 @@ namespace Nexogen.Libraries.Metrics.Prometheus.AspCore
             services.AddSingleton<IExposable>(prometheus);
 
             services.AddSingleton<HttpMetrics, HttpMetrics>();
+
+            return services;
         }
 
         /// <summary>
