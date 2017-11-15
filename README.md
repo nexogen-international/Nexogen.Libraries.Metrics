@@ -69,7 +69,7 @@ Gauges can take any value, so they are the most versatile metric type available.
 ```
 ## Histograms
 
-Histograms are a trade off between measuring resolution and precision. With histograms you can avoid aliasing errors from Prometheus's scrape interval, but lose granuality. Histograms also need to have their buckets defined before use and we provide sevaral bucket generators to make it easy.
+Histograms are a trade off between measuring resolution and precision. With histograms you can avoid aliasing errors from Prometheus's scrape interval, but lose granularity. Histograms also need to have their buckets defined before use and we provide sevaral bucket generators to make it easy.
 
 ```cs
 
