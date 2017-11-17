@@ -105,15 +105,15 @@ namespace Nexogen.Libraries.Metrics.Prometheus
 
         public static string EscapeLabel(string label)
         {
-            return label.Replace("\n", @"\n")
-                        .Replace("\\", @"\")
+            return label.Replace("\\", @"\\")
+                        .Replace("\n", @"\n")
                         .Replace("\"", @"\""");
         }
 
         public static string EscapeHelp(string help)
         {
-            return help.Replace("\n", @"\n")
-                       .Replace("\\", @"\");
+            return help.Replace("\\", @"\\")
+                       .Replace("\n", @"\n");
         }
     }
 }
