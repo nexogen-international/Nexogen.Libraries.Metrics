@@ -1,21 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Nexogen.Libraries.Metrics.Extensions;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using System.Diagnostics;
 
 namespace Nexogen.Libraries.Metrics.Prometheus.AspCore
 {
-    internal class HttpMetricsMiddleware
+    internal class CollectMetricsMiddleware
     {
         private readonly RequestDelegate next;
         private readonly HttpMetrics m;
 
-        public HttpMetricsMiddleware(RequestDelegate next, HttpMetrics m)
+        public CollectMetricsMiddleware(RequestDelegate next, HttpMetrics m)
         {
             this.next = next;
             this.m = m;

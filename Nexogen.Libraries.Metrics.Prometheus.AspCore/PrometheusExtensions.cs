@@ -29,7 +29,11 @@ namespace Nexogen.Libraries.Metrics.Prometheus.AspCore
         /// <returns></returns>
         public static IApplicationBuilder UsePrometheus(this IApplicationBuilder builder)
         {
-            return builder.UseMiddleware<HttpMetricsMiddleware>();
+            builder.UseMiddleware<CollectMetricsMiddleware>();
+            return builder.Map("/metrics", cfg =>
+            {
+                cfg.UseMiddleware<ServeMetricsMiddleware>();
+            });
         }
     }
 }
