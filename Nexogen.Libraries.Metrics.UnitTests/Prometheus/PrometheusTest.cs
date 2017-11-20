@@ -75,7 +75,7 @@ namespace Nexogen.Libraries.Metrics.UnitTests.Prometheus
         public void Help_text_is_properly_escaped()
         {
             Assert.Equal(@"help\nnewline", PrometheusConventions.EscapeHelp("help\nnewline"));
-            Assert.Equal(@"a\b", PrometheusConventions.EscapeHelp("a\\b"));
+            Assert.Equal(@"a\\b", PrometheusConventions.EscapeHelp("a\\b"));
             Assert.Equal(@"it's ""OK""", PrometheusConventions.EscapeHelp("it's \"OK\""));
         }
 
@@ -83,7 +83,7 @@ namespace Nexogen.Libraries.Metrics.UnitTests.Prometheus
         public void Label_text_is_properly_escaped()
         {
             Assert.Equal(@"help\nnewline", PrometheusConventions.EscapeLabel("help\nnewline"));
-            Assert.Equal(@"a\b", PrometheusConventions.EscapeLabel("a\\b"));
+            Assert.Equal(@"a\\b", PrometheusConventions.EscapeLabel("a\\b"));
             Assert.Equal(@"it's not \""OK\""", PrometheusConventions.EscapeLabel("it's not \"OK\""));
         }
     }
