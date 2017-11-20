@@ -77,6 +77,7 @@ namespace Nexogen.Libraries.Metrics.UnitTests.Prometheus
             Assert.Equal(@"help\nnewline", PrometheusConventions.EscapeHelp("help\nnewline"));
             Assert.Equal(@"a\\b", PrometheusConventions.EscapeHelp("a\\b"));
             Assert.Equal(@"it's ""OK""", PrometheusConventions.EscapeHelp("it's \"OK\""));
+            Assert.Equal(@"complex\nexample\\with\\multiple\n", PrometheusConventions.EscapeHelp("complex\nexample\\with\\multiple\n")); 
         }
 
         [Fact]
@@ -85,6 +86,7 @@ namespace Nexogen.Libraries.Metrics.UnitTests.Prometheus
             Assert.Equal(@"help\nnewline", PrometheusConventions.EscapeLabel("help\nnewline"));
             Assert.Equal(@"a\\b", PrometheusConventions.EscapeLabel("a\\b"));
             Assert.Equal(@"it's not \""OK\""", PrometheusConventions.EscapeLabel("it's not \"OK\""));
+            Assert.Equal(@"complex\nexample\\with\\multiple\""escapes\""\n", PrometheusConventions.EscapeLabel("complex\nexample\\with\\multiple\"escapes\"\n"));
         }
     }
 }
