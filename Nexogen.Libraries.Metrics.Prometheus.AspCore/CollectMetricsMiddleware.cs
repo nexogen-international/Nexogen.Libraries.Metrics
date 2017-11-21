@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using System.Diagnostics;
+using System;
 
 namespace Nexogen.Libraries.Metrics.Prometheus.AspCore
 {
@@ -8,11 +9,13 @@ namespace Nexogen.Libraries.Metrics.Prometheus.AspCore
     {
         private readonly RequestDelegate next;
         private readonly HttpMetrics m;
+        private readonly Func<HttpContext, string> pathBuilder;
 
-        public CollectMetricsMiddleware(RequestDelegate next, HttpMetrics m)
+        public CollectMetricsMiddleware(RequestDelegate next, HttpMetrics m, Func<HttpContext, string> pathBuilder)
         {
             this.next = next;
             this.m = m;
+            this.pathBuilder = pathBuilder ?? PrometheusExtensions.GetHttpMetricPath;
         }
 
         public async Task Invoke(HttpContext httpContext)
@@ -24,7 +27,7 @@ namespace Nexogen.Libraries.Metrics.Prometheus.AspCore
             sw.Stop();
 
             var method = httpContext.Request.Method;
-            var handler =  httpContext.Request.Path.Value.ToLower();
+            var handler = pathBuilder(httpContext);
             var statusCode = httpContext.Response.StatusCode.ToString();
 
             m.HttpRequestDurationSeconds
