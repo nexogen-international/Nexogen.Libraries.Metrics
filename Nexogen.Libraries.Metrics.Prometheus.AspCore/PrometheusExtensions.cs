@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Collections.Generic;
 
 namespace Nexogen.Libraries.Metrics.Prometheus.AspCore
@@ -63,7 +65,7 @@ namespace Nexogen.Libraries.Metrics.Prometheus.AspCore
                 var lastRouter = feature.RouteData.Routers.FindLast();
                 if (lastRouter != null)
                 {
-                    path = lastRouter.ParsedTemplate.TemplateText;
+                    path = GetRoutePath(context, lastRouter);
                 }
             }
             return path ?? context.Request.Path.Value.ToLowerInvariant();
@@ -86,6 +88,42 @@ namespace Nexogen.Libraries.Metrics.Prometheus.AspCore
                     return routers[i] as RouteBase;
             }
             return null;
+        }
+
+        static string GetRoutePath(HttpContext context, RouteBase lastRouter)
+        {
+            var path = lastRouter.ParsedTemplate.TemplateText;
+            var pathUri = new Uri(context.Request.GetDisplayUrl(), UriKind.Absolute);
+            var difference = pathUri.Segments.Length - lastRouter.ParsedTemplate.Segments.Count;
+            //segment 0 == '/'
+            //segment values end with '/'
+            //difference == (1,2,3) implemented to avoid allocating the string builder
+            if (difference == 1)
+            {
+                path = string.Concat(pathUri.Segments[0], path);
+            }
+            else if (difference == 2)
+            {
+                //push 0th & 1st segments
+                path = string.Concat(pathUri.Segments[0], pathUri.Segments[1], path);
+            }
+            else if (difference == 3)
+            {
+                //push 0th & 1st & 2nd segments
+                path = string.Concat(pathUri.Segments[0], pathUri.Segments[1], pathUri.Segments[2], path);
+            }
+            else if(difference > 3)
+            {
+                //0 should never hit here
+                var builder = new System.Text.StringBuilder();
+                for (int i = 0; i < difference; i++)
+                {
+                    builder.Append(pathUri.Segments[i]);
+                }
+                builder.Append(path);
+                path = builder.ToString();
+            }
+            return path;
         }
     }
 }
