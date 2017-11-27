@@ -17,5 +17,6 @@ $BUILD ./Nexogen.Libraries.Metrics.Extensions
 $BUILD ./Nexogen.Libraries.Metrics.Prometheus
 $BUILD ./Nexogen.Libraries.Metrics.Prometheus.AspCore
 $BUILD ./Nexogen.Libraries.Metrics.Prometheus.PushGateway
+$BUILD ./Nexogen.Libraries.Metrics.Prometheus.Standalone
 
 dotnet nuget push **/*.nupkg -s https://nuget.org -k $NUGET_API_KEY
