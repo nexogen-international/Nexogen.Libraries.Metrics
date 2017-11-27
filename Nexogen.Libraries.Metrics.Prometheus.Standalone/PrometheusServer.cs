@@ -7,37 +7,40 @@ using Nexogen.Libraries.Metrics.Prometheus;
 
 namespace Nexogen.Libraries.Metrics.Prometheus.Standalone
 {
-    public class PrometheusServer
+    /// <summary>
+    /// A simple Prometheus metric server using an embedded HTTP server.
+    /// </summary>
+    public class PrometheusServer : IDisposable
     {
         HttpListener listener;
 
         /// <summary>
-        /// 
+        /// Creates and starts a metric server.
         /// </summary>
-        /// <param name="metrics"></param>
-        /// <param name="listener"></param>
+        /// <param name="metrics">The metric to expose</param>
+        /// <param name="listener">An HttpListener instance to use</param>
         public PrometheusServer(IExposable metrics, HttpListener listener)
         {
             this.listener = listener;
 
-            this.listener.Request += async (sender, context) =>
-            {
-                // TODO: Could be configurable in the future throught a builder
-                if (context.Request.HttpMethod == HttpMethods.Get
-                    && context.Request.Url.AbsolutePath == "/metrics")
-                {
-                    context.Response.StatusCode = 200;
-                    context.Response.Headers.Add("Content-Type", "text/plain; version=0.0.4");
-                    await metrics.Expose(context.Response.OutputStream, ExposeOptions.Default);
-                }
-                else
-                {
-                    context.Response.NotFound();
-                }
-            };
-
             try
             {
+                this.listener.Request += async (sender, context) =>
+                {
+                    if (context.Request.HttpMethod == HttpMethods.Get)
+                    {
+                        context.Response.StatusCode = 200;
+                        context.Response.Headers.Add("Content-Type", "text/plain; version=0.0.4");
+                        await metrics.Expose(context.Response.OutputStream, ExposeOptions.Default);
+                    }
+                    else
+                    {
+                        context.Response.NotFound();
+                    }
+
+                    context.Response.Close();
+                };
+
                 listener.Start();
             }
             catch (Exception ex)
@@ -47,24 +50,35 @@ namespace Nexogen.Libraries.Metrics.Prometheus.Standalone
         }
 
         /// <summary>
-        /// 
+        /// Creates and starts a metric server.
         /// </summary>
-        /// <param name="metrics"></param>
-        /// <param name="address"></param>
-        /// <param name="port"></param>
+        /// <param name="metrics">The metric to expose</param>
+        /// <param name="address">The IP address to listen on</param>
+        /// <param name="port">The TCP port to bind to</param>
         public PrometheusServer(IExposable metrics, IPAddress address, int port)
             : this(metrics, new HttpListener(address, port))
         {
         }
 
         /// <summary>
-        /// 
+        /// Creates and starts a metric server.
         /// </summary>
-        /// <param name="metrics"></param>
-        /// <param name="port"></param>
+        /// <param name="metrics">The metric to expose</param>
+        /// <param name="port">The TCP port to bind to</param>
         public PrometheusServer(IExposable metrics, int port)
             : this(metrics, IPAddress.Parse("0.0.0.0"), port)
         {
+        }
+
+        /// <summary>
+        /// Closes the server socket.
+        /// </summary>
+        public void Dispose()
+        {
+            if (listener.IsListening)
+            {
+                listener.Close();
+            }
         }
     }
 }
