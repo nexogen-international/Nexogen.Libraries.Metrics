@@ -31,7 +31,6 @@ namespace Nexogen.Libraries.Metrics.Prometheus.AspCore
         /// Add Prometheus Metrics support to the application.
         /// </summary>
         /// <param name="builder"></param>
-        /// <param name="getHttpPath">Function to retrieve metric path from http context</param>
         /// <returns></returns>
         public static IApplicationBuilder UsePrometheus(this IApplicationBuilder builder)
         {
@@ -40,25 +39,6 @@ namespace Nexogen.Libraries.Metrics.Prometheus.AspCore
                 {
                     cfg.UseMiddleware<ServeMetricsMiddleware>();
                 });
-        }
-
-        /// <summary>
-        /// Gets the last <see cref="RouteBase"/> that
-        /// matched the request. We use the route base because the <see cref="IRouter"/>
-        /// doesn't expose the template text.        
-        /// </summary>
-        /// <param name="routers">List of routers that matched the request</param>
-        /// <returns></returns>
-        internal static RouteBase FindLast(this IList<IRouter> routers)
-        {
-            if (routers == null || routers.Count == 0)
-                return null;
-            for (int i = routers.Count - 1; i >= 0; i--)
-            {
-                if (routers[i] is RouteBase)
-                    return routers[i] as RouteBase;
-            }
-            return null;
         }
     }
 }

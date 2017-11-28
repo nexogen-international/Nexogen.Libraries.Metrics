@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.AspNetCore.Http.Extensions;
+using System.Collections.Generic;
 
 namespace Nexogen.Libraries.Metrics.Prometheus.AspCore
 {
@@ -59,7 +60,7 @@ namespace Nexogen.Libraries.Metrics.Prometheus.AspCore
             string path = null;
             if (feature != null)
             {
-                var lastRouter = feature.RouteData.Routers.FindLast();
+                var lastRouter = FindLast(feature.RouteData.Routers);
                 if (lastRouter != null)
                 {
                     path = GetRoutePath(context, lastRouter);
@@ -102,6 +103,27 @@ namespace Nexogen.Libraries.Metrics.Prometheus.AspCore
                 path = builder.ToString();
             }
             return path;
+        }
+
+
+
+        /// <summary>
+        /// Gets the last <see cref="RouteBase"/> that
+        /// matched the request. We use the route base because the <see cref="IRouter"/>
+        /// doesn't expose the template text.        
+        /// </summary>
+        /// <param name="routers">List of routers that matched the request</param>
+        /// <returns></returns>
+        static RouteBase FindLast(IList<IRouter> routers)
+        {
+            if (routers == null || routers.Count == 0)
+                return null;
+            for (int i = routers.Count - 1; i >= 0; i--)
+            {
+                if (routers[i] is RouteBase)
+                    return routers[i] as RouteBase;
+            }
+            return null;
         }
     }
 }
