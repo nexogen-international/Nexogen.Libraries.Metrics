@@ -13,5 +13,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Nexogen.Libraries.Metrics.Prometheus.AspCore\Nexogen.Libraries.Metrics.Prometheus.AspCore.csproj" />
+    <ProjectReference Include="..\Nexogen.Libraries.Metrics.Prometheus\Nexogen.Libraries.Metrics.Prometheus.csproj" />
   </ItemGroup>
 </Project>

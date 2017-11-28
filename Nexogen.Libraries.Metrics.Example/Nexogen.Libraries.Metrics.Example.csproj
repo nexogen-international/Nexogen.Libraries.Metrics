@@ -1,8 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework Condition=" '$(OS)' != 'Windows_NT' ">netcoreapp1.1</TargetFramework>
-    <TargetFrameworks Condition=" '$(OS)' == 'Windows_NT' ">netcoreapp1.1;net452</TargetFrameworks>  
+    <TargetFramework>netcoreapp1.1</TargetFramework>
     <OutputType>Exe</OutputType>    
   </PropertyGroup>
 
