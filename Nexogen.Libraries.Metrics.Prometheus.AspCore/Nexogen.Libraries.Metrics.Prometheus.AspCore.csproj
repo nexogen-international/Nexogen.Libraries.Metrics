@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <PackageReference Include="microsoft.aspnetcore.http" Version="1.0.3" />
+    <PackageReference Include="microsoft.aspnetcore.routing" Version="1.0.3" />
   </ItemGroup>
 
   <ItemGroup>

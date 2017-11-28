@@ -1,5 +1,10 @@
 ﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Extensions;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Collections.Generic;
 
 namespace Nexogen.Libraries.Metrics.Prometheus.AspCore
 {
@@ -29,11 +34,11 @@ namespace Nexogen.Libraries.Metrics.Prometheus.AspCore
         /// <returns></returns>
         public static IApplicationBuilder UsePrometheus(this IApplicationBuilder builder)
         {
-            builder.UseMiddleware<CollectMetricsMiddleware>();
-            return builder.Map("/metrics", cfg =>
-            {
-                cfg.UseMiddleware<ServeMetricsMiddleware>();
-            });
+            return builder.UseMiddleware<CollectMetricsMiddleware>()
+                .Map("/metrics", cfg =>
+                {
+                    cfg.UseMiddleware<ServeMetricsMiddleware>();
+                });
         }
     }
 }

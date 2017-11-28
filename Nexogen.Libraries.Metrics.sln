@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.12
+VisualStudioVersion = 15.0.27004.2009
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nexogen.Libraries.Metrics", "Nexogen.Libraries.Metrics\Nexogen.Libraries.Metrics.csproj", "{8F423DC2-7CC3-4850-84F2-0193CCC42BA1}"
 EndProject
@@ -19,6 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nexogen.Libraries.Metrics.U
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nexogen.Libraries.Metrics.Prometheus.PushGateway", "Nexogen.Libraries.Metrics.Prometheus.PushGateway\Nexogen.Libraries.Metrics.Prometheus.PushGateway.csproj", "{0198B66E-9667-44C5-9CEB-B3D214DC6880}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nexogen.Libraries.Metrics.Prometheus.AspCore.UnitTests", "Nexogen.Libraries.Metrics.Prometheus.AspCore.UnitTests\Nexogen.Libraries.Metrics.Prometheus.AspCore.UnitTests.csproj", "{78427E81-8DB2-4E45-B5B9-F1378C9DAA2C}"
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nexogen.Libraries.Metrics.Prometheus.Standalone", "Nexogen.Libraries.Metrics.Prometheus.Standalone\Nexogen.Libraries.Metrics.Prometheus.Standalone.csproj", "{D1800B6B-56EB-496E-AD09-473F215D350C}"
 EndProject
 Global
@@ -59,6 +60,10 @@ Global
 		{0198B66E-9667-44C5-9CEB-B3D214DC6880}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0198B66E-9667-44C5-9CEB-B3D214DC6880}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0198B66E-9667-44C5-9CEB-B3D214DC6880}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78427E81-8DB2-4E45-B5B9-F1378C9DAA2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78427E81-8DB2-4E45-B5B9-F1378C9DAA2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78427E81-8DB2-4E45-B5B9-F1378C9DAA2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78427E81-8DB2-4E45-B5B9-F1378C9DAA2C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D1800B6B-56EB-496E-AD09-473F215D350C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D1800B6B-56EB-496E-AD09-473F215D350C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D1800B6B-56EB-496E-AD09-473F215D350C}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -68,6 +73,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {103CA3DE-57C8-4E6B-B436-14A94FDB691F}
+		SolutionGuid = {A2586AB4-2BD9-4F92-A1FE-4D6074A5448B}
 	EndGlobalSection
 EndGlobal
