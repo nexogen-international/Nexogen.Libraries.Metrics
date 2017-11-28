@@ -62,7 +62,7 @@ namespace Nexogen.Libraries.Metrics.Prometheus.Standalone
             {
                 try
                 {
-                    errorHandler(new PrometheusServerException("Error while handling HTTP request", ex));
+                    errorHandler?.Invoke(new PrometheusServerException("Error while handling HTTP request", ex));
                 }
                 catch (Exception)
                 {
