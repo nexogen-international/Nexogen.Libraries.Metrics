@@ -20,9 +20,9 @@ namespace Nexogen.Libraries.Metrics.Prometheus.Standalone
         /// <summary>
         /// Creates and starts a metric server.
         /// </summary>
-        /// <param name="metrics">The metric to expose</param>
-        /// <param name="listener">An HttpListener instance to use</param>
-        /// <param name="errorHandler">Error handling callback</param>
+        /// <param name="metrics">The metric to expose.</param>
+        /// <param name="listener">An HttpListener instance to use.</param>
+        /// <param name="errorHandler">Error handling callback. Can be null.</param>
         public PrometheusServer(IExposable metrics, HttpListener listener, Action<Exception> errorHandler)
         {
             this.listener = listener ?? throw new ArgumentNullException(nameof(listener));
