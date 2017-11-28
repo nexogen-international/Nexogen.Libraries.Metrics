@@ -17,9 +17,9 @@ namespace Nexogen.Libraries.Metrics.Prometheus.Standalone
         private Action<Exception> errorHandler;
 
         /// <summary>
-        /// 
+        /// Creates a new builder. Should be called through the extension method on IExposable.
         /// </summary>
-        /// <param name="exposable"></param>
+        /// <param name="exposable">The exposable to server over HTTP.</param>
         public PrometheusServerBuilder(IExposable exposable)
         {
             this.exposable = exposable;
