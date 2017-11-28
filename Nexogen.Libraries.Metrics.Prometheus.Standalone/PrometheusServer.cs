@@ -21,7 +21,12 @@ namespace Nexogen.Libraries.Metrics.Prometheus.Standalone
         /// <param name="listener">An HttpListener instance to use</param>
         public PrometheusServer(IExposable metrics, HttpListener listener)
         {
-            this.listener = listener;
+            this.listener = listener ?? throw new ArgumentNullException(nameof(listener));
+
+            if (metrics == null)
+            {
+                throw new ArgumentNullException(nameof(metrics));
+            }
 
             try
             {
@@ -75,10 +80,7 @@ namespace Nexogen.Libraries.Metrics.Prometheus.Standalone
         /// </summary>
         public void Dispose()
         {
-            if (listener.IsListening)
-            {
-                listener.Close();
-            }
+            listener.Dispose();
         }
     }
 }
