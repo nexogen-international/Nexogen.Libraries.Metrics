@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nexogen.Libraries.Metrics.U
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nexogen.Libraries.Metrics.Prometheus.PushGateway", "Nexogen.Libraries.Metrics.Prometheus.PushGateway\Nexogen.Libraries.Metrics.Prometheus.PushGateway.csproj", "{0198B66E-9667-44C5-9CEB-B3D214DC6880}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nexogen.Libraries.Metrics.Prometheus.AspCoreTests", "Nexogen.Libraries.Metrics.Prometheus.AspCoreTests\Nexogen.Libraries.Metrics.Prometheus.AspCoreTests.csproj", "{40669B91-CD05-4ECB-8365-20C498122C81}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nexogen.Libraries.Metrics.Prometheus.AspCore.UnitTests", "Nexogen.Libraries.Metrics.Prometheus.AspCore.UnitTests\Nexogen.Libraries.Metrics.Prometheus.AspCore.UnitTests.csproj", "{78427E81-8DB2-4E45-B5B9-F1378C9DAA2C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,10 +59,10 @@ Global
 		{0198B66E-9667-44C5-9CEB-B3D214DC6880}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0198B66E-9667-44C5-9CEB-B3D214DC6880}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0198B66E-9667-44C5-9CEB-B3D214DC6880}.Release|Any CPU.Build.0 = Release|Any CPU
-		{40669B91-CD05-4ECB-8365-20C498122C81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{40669B91-CD05-4ECB-8365-20C498122C81}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{40669B91-CD05-4ECB-8365-20C498122C81}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{40669B91-CD05-4ECB-8365-20C498122C81}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78427E81-8DB2-4E45-B5B9-F1378C9DAA2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78427E81-8DB2-4E45-B5B9-F1378C9DAA2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78427E81-8DB2-4E45-B5B9-F1378C9DAA2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78427E81-8DB2-4E45-B5B9-F1378C9DAA2C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
