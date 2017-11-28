@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <VersionPrefix>$(PackageVersionNumber)</VersionPrefix>
+    <TargetFramework>netstandard1.6</TargetFramework>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+
+    <Description>Standalone Prometheus exporter for Nexogen Metrics</Description>
+    <PackageTags>Metrics;Prometheus;Standalone</PackageTags>
+    <Authors>Nexogen</Authors>
+    <Copyright>Nexogen 2017</Copyright>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NETStandard.HttpListener" Version="1.0.3.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Nexogen.Libraries.Metrics.Prometheus\Nexogen.Libraries.Metrics.Prometheus.csproj" />
+  </ItemGroup>
+
+</Project>
