@@ -16,14 +16,27 @@ namespace Nexogen.Libraries.Metrics.Prometheus.AspCore
         /// <param name="services"></param>
         /// <returns></returns>
         public static IServiceCollection AddPrometheus(this IServiceCollection services)
+            => services.AddPrometheus(new PrometheusMetrics());
+
+        /// <summary>
+        /// Configure DI for using the Prometheus Metrics library using an externally 
+        /// created and managed metrics object. The metrics object will be registered
+        /// as singletons. T must be both <see cref="IMetrics"/> &amp; <see cref="IExposable"/>
+        /// </summary>
+        /// <typeparam name="T">The metrics object type</typeparam>
+        /// <param name="services">Service collection to add to</param>
+        /// <param name="prometheusMetrics">The metrics object</param>
+        /// <returns></returns>
+        public static IServiceCollection AddPrometheus<T>(this IServiceCollection services, T prometheusMetrics)
+            where T : class, IMetrics, IExposable
         {
-            var prometheus = new PrometheusMetrics();
+            if (prometheusMetrics == null)
+                throw new ArgumentNullException(nameof(prometheusMetrics));
 
-            services.AddSingleton<IMetrics>(prometheus);
-            services.AddSingleton<IExposable>(prometheus);
+            services.AddSingleton<IMetrics>(prometheusMetrics);
+            services.AddSingleton<IExposable>(prometheusMetrics);
 
-            services.AddSingleton<HttpMetrics, HttpMetrics>();
-
+            services.AddSingleton<HttpMetrics>();
             return services;
         }
 
