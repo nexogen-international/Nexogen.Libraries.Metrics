@@ -43,15 +43,18 @@ namespace Nexogen.Libraries.Metrics.Prometheus.AspCore
         /// <summary>
         /// Add Prometheus Metrics support to the application.
         /// </summary>
-        /// <param name="builder"></param>
+        /// 
+        /// <param name="builder">The IApplicationBuilder instance.</param>
+        /// <param name="options">Options to tune metrics behaviour.</param>
         /// <returns></returns>
-        public static IApplicationBuilder UsePrometheus(this IApplicationBuilder builder)
+        public static IApplicationBuilder UsePrometheus(this IApplicationBuilder builder, Action<IPrometheusOptions> options = null)
         {
-            return builder.UseMiddleware<CollectMetricsMiddleware>()
-                .Map("/metrics", cfg =>
-                {
-                    cfg.UseMiddleware<ServeMetricsMiddleware>();
-                });
+            options?.Invoke(new PrometheusOptions(builder));
+
+            return builder.Map("/metrics", cfg =>
+            {
+                cfg.UseMiddleware<ServeMetricsMiddleware>();
+            });
         }
     }
 }
