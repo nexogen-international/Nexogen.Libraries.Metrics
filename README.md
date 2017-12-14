@@ -99,3 +99,15 @@ We provide an [Extensions](https://www.nuget.org/packages/Nexogen.Libraries.Metr
 
             gauge.TrackInProgress(() => Array.Sort(items));
 ```
+## Standalone server
+
+There is a standalone server if you don't want to use ASP.NET Core just to expose your metrics.
+
+```sh
+dotnet add package Nexogen.Libraries.Metrics.Prometheus.Standalone
+```
+
+```cs
+            var metrics = new PrometheusMetrics();                                                                                                                                                                                                                                  
+            metrics.Server().Port(9100).Start();
+```
