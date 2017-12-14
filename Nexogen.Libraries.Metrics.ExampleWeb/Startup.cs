@@ -35,7 +35,7 @@ namespace Nexogen.Libraries.Metrics.ExampleWeb
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
-            app.UsePrometheus();
+            app.UsePrometheus(options => options.CollectHttpMetrics());
             app.UseMvc();
         }
     }
