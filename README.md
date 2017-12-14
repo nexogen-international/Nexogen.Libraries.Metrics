@@ -42,14 +42,14 @@ dotnet add package Nexogen.Libraries.Metrics.Prometheus.PushGateway
 Counters can only increment, so they are most useful for counting things, like calls to API endpoints or backend services.
 
 ```cs
-            IMetrics metrics = new PrometheusMetrics();
+IMetrics metrics = new PrometheusMetrics();
 
-            ICounter counter = metrics.Counter()
-                .Name("nexogen_sort_calls_total")
-                .Help("Total calls to sort routine.")
-                .Register();
+ICounter counter = metrics.Counter()
+    .Name("nexogen_sort_calls_total")
+    .Help("Total calls to sort routine.")
+    .Register();
 
-            counter.Increment();
+counter.Increment();
 ```
 
 ## Gauges
@@ -57,15 +57,15 @@ Counters can only increment, so they are most useful for counting things, like c
 Gauges can take any value, so they are the most versatile metric type available. You can even measure durations or dates with them!
 
 ```cs
-            IGauge gauge = metrics.Gauge()
-                .Name("nexogen_sorted_items_count_last")
-                .Help("The last count of the sorted items.")
-                .Register();
-                
-            gauge.Value = items.Length;
+IGauge gauge = metrics.Gauge()
+    .Name("nexogen_sorted_items_count_last")
+    .Help("The last count of the sorted items.")
+    .Register();
 
-            gauge.Increment();
-            gauge.Decrement(10.1);           
+gauge.Value = items.Length;
+
+gauge.Increment();
+gauge.Decrement(10.1);           
 ```
 ## Histograms
 
@@ -73,15 +73,15 @@ Histograms are a trade off between measuring resolution and precision. With hist
 
 ```cs
 
-            IHistogram histogram = metrics.Histogram()
-                .LinearBuckets(0.01, 0.01, 100)
-                .Name("nexogen_sort_time_seconds")
-                .Help("Time taken for sort in seconds.")
-                .Register();
+IHistogram histogram = metrics.Histogram()
+    .LinearBuckets(0.01, 0.01, 100)
+    .Name("nexogen_sort_time_seconds")
+    .Help("Time taken for sort in seconds.")
+    .Register();
 
-            var sw = Stopwatch.StartNew();
-            Array.Sort(items);
-            histogram.Observe(sw.Elapsed.TotalSeconds);
+var sw = Stopwatch.StartNew();
+Array.Sort(items);
+histogram.Observe(sw.Elapsed.TotalSeconds);
 
 ```
 
@@ -90,14 +90,14 @@ Histograms are a trade off between measuring resolution and precision. With hist
 We provide an [Extensions](https://www.nuget.org/packages/Nexogen.Libraries.Metrics.Extensions) library for making common measurements easy.
 
 ```cs
-            using (histogram.Timer())
-            {
-                Array.Sort(items);
-            }
+using (histogram.Timer())
+{
+    Array.Sort(items);
+}
 
-            gauge.SetToCurrentTime();
+gauge.SetToCurrentTime();
 
-            gauge.TrackInProgress(() => Array.Sort(items));
+gauge.TrackInProgress(() => Array.Sort(items));
 ```
 ## Standalone server
 
@@ -108,6 +108,6 @@ dotnet add package Nexogen.Libraries.Metrics.Prometheus.Standalone
 ```
 
 ```cs
-            var metrics = new PrometheusMetrics();                                                                                                                                                                                                                                  
-            metrics.Server().Port(9100).Start();
+var metrics = new PrometheusMetrics();
+metrics.Server().Port(9100).Start();
 ```
