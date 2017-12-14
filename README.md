@@ -10,6 +10,12 @@ Library for collecting application metrics in .Net and exporting them to [Promet
 [![GitHub stars](https://img.shields.io/github/stars/nexogen-international/Nexogen.Libraries.Metrics.svg)](https://github.com/nexogen-international/Nexogen.Libraries.Metrics/stargazers)
 [![Twitter](https://img.shields.io/twitter/url/https/github.com/nexogen-international/Nexogen.Libraries.Metrics.svg?style=social)](https://twitter.com/intent/tweet?text=Wow:&url=%5Bobject%20Object%5D)
 
+# ⚠ Important note for those updating from versions <3.0.0 ⚠
+
+Prometheus metrics registration API in ASP.NET Core applications is changed.
+The automatic ASP.NET Core request metrics collection is no longer enabled by default! This means you need to manually enable it to have metrics automatically collected for every request. See the relevant section below for details.
+The metrics you explicitly defined yourself are not affected in any way.
+
 # Installation
 
 ```sh
@@ -35,7 +41,7 @@ Or you can use a push gateway when measuring batch processes.
 dotnet add package Nexogen.Libraries.Metrics.Prometheus.PushGateway
 ```
 
-# Example usage
+# Example usage - Measurements
 
 ## Counters
 
@@ -99,6 +105,33 @@ gauge.SetToCurrentTime();
 
 gauge.TrackInProgress(() => Array.Sort(items));
 ```
+
+## ASP.NET Core metrics collection
+
+There is a way to automatically collect metrics about the ASP.NET Core requests. This needs to be enabled when registering to the application. 
+
+```cs
+public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+{
+    app.UsePrometheus(options => options.CollectHttpMetrics());
+}
+```
+
+The `options.CollectHttpMetrics()` registers automatic request metric collection, which was implicitly registered in versions prior to version 3.0.0.
+
+# Example usage - Exposing metrics
+
+## Asp.Net Core
+
+The collected metrics can be exposed via ASP.NET Core middleware. To do this you need to register the feature during configuration.
+
+```cs
+public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+{
+    app.UsePrometheus();
+}
+```
+
 ## Standalone server
 
 There is a standalone server if you don't want to use ASP.NET Core just to expose your metrics.
