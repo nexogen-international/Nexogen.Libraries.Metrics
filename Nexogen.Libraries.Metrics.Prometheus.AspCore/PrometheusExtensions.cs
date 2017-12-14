@@ -44,11 +44,14 @@ namespace Nexogen.Libraries.Metrics.Prometheus.AspCore
         /// Add Prometheus Metrics support to the application.
         /// </summary>
         /// <param name="builder"></param>
+        /// <param name="collectAspMetrics">to avoid the collection of ASP request metrics (URLs and timings) pass false</param>
         /// <returns></returns>
-        public static IApplicationBuilder UsePrometheus(this IApplicationBuilder builder)
+        public static IApplicationBuilder UsePrometheus(this IApplicationBuilder builder, bool collectAspMetrics = true)
         {
-            return builder.UseMiddleware<CollectMetricsMiddleware>()
-                .Map("/metrics", cfg =>
+            if (collectAspMetrics)
+                builder.UseMiddleware<CollectMetricsMiddleware>();
+
+            return builder.Map("/metrics", cfg =>
                 {
                     cfg.UseMiddleware<ServeMetricsMiddleware>();
                 });
