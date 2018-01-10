@@ -12,8 +12,8 @@ Library for collecting application metrics in .Net and exporting them to [Promet
 
 # ⚠ Updating from version 2.6.0 or earlier ⚠
 
-Prometheus metrics registration API in ASP.NET Core applications has changed.
-The automatic ASP.NET Core request metrics collection is no longer enabled by default. This means that you need to manually enable it to have HTTP request metrics collected. See the relevant section below for details.
+The default Prometheus metrics registration behavior in ASP.NET Core applications has changed.
+The request metrics collection is no longer enabled by default. This means that you need to add code to enable it. See the relevant section below for code samples.
 Explicitly defined metrics are not affected in any way.
 
 # Installation
