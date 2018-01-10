@@ -24,7 +24,7 @@ namespace Nexogen.Libraries.Metrics.Prometheus
         private IGauge TotalProcessorTime;
         private IGauge ThreadCount;
 
-        private IGauge ProcessCpuSecondsTotal;
+        private ICounter ProcessCpuSecondsTotal;
         private IGauge ProcessOpenFds;
         private IGauge ProcessMaxFds;
         private IGauge ProcessVirtualMemoryBytes;
@@ -118,7 +118,7 @@ namespace Nexogen.Libraries.Metrics.Prometheus
                 .Help("The total processor time for this process")
                 .Register();
 
-            ProcessCpuSecondsTotal = metrics.Gauge()
+            ProcessCpuSecondsTotal = metrics.Counter()
                 .Name("process_cpu_seconds_total")
                 .Help("Total user and system CPU time spent in seconds")
                 .Register();
@@ -184,7 +184,14 @@ namespace Nexogen.Libraries.Metrics.Prometheus
             ThreadCount.Value = proc.Threads.Count;
 
             // standard collectors
-            ProcessCpuSecondsTotal.Value = proc.TotalProcessorTime.TotalMilliseconds / 1000.0;
+
+            // ugly, but this needs to be a counter and we have an external value
+            lock (ProcessCpuSecondsTotal)
+            {
+                var newValue = proc.TotalProcessorTime.TotalMilliseconds / 1000.0;
+                var difference = Math.Max(newValue - ProcessCpuSecondsTotal.Value, 0);
+                ProcessCpuSecondsTotal.Increment(difference);
+            }
 
             // coreclr keeps no track of this
             ProcessOpenFds.Value = Double.NaN;
