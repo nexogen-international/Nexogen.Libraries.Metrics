@@ -4,7 +4,6 @@
     <TargetFramework Condition=" '$(OS)' != 'Windows_NT' ">netcoreapp1.1</TargetFramework>
     <TargetFrameworks Condition=" '$(OS)' == 'Windows_NT' ">netcoreapp1.1;net452</TargetFrameworks>  
     <DebugType>portable</DebugType>
-    <NetStandardImplicitPackageVersion>1.6.1</NetStandardImplicitPackageVersion>
   </PropertyGroup>
 
   <ItemGroup>
