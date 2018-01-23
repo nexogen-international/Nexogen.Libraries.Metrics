@@ -6,7 +6,7 @@ os:
 sudo: required
 dist: trusty
 # Ensure that .NET Core is installed
-dotnet: 1.0.4
+dotnet: 2.1.4
 # Ensure that Mono is not installed
 mono: none
 
