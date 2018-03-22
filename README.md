@@ -10,6 +10,10 @@ Library for collecting application metrics in .Net and exporting them to [Promet
 [![GitHub issues](https://img.shields.io/github/issues/nexogen-international/Nexogen.Libraries.Metrics.svg)](https://github.com/nexogen-international/Nexogen.Libraries.Metrics/issues)
 [![GitHub stars](https://img.shields.io/github/stars/nexogen-international/Nexogen.Libraries.Metrics.svg)](https://github.com/nexogen-international/Nexogen.Libraries.Metrics/stargazers)
 
+# API Reference
+
+[Nexogen.Libraries.Metrics API Reference](https://github.com/nexogen-international/Nexogen.Libraries.Metrics/wiki)
+
 # ⚠ Updating from version 2.6.0 or earlier ⚠
 
 The default Prometheus metrics registration behavior in ASP.NET Core applications has changed.
