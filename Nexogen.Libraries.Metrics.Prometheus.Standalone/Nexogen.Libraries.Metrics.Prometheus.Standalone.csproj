@@ -7,6 +7,7 @@
 
     <Description>Standalone Prometheus exporter for Nexogen Metrics</Description>
     <PackageTags>Metrics;Prometheus;Standalone</PackageTags>
+    <PackageIconUrl>https://raw.githubusercontent.com/nexogen-international/Nexogen.Libraries.Metrics/master/icon.png</PackageIconUrl>
     <Authors>Nexogen</Authors>
     <Copyright>Nexogen 2017</Copyright>
   </PropertyGroup>
