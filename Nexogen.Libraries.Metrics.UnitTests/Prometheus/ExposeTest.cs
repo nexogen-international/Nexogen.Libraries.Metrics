@@ -346,6 +346,40 @@ namespace Nexogen.Libraries.Metrics.UnitTests.Prometheus
             Assert.Equal(1, lines.Count(s => Regex.IsMatch(s, "test_gauge_total{method=\"POST\"} 823 [0-9]+")));
         }
 
+
+        [Fact]
+        public async Task LabelledGauge_replacevalue_replaces_obsoleted_values_and_new_values_are_exposed_correctly()
+        {
+            var metrics = new PrometheusMetrics();
+
+            var gauge = metrics.Gauge()
+                .Name("test_gauge_total")
+                .Help("This is the help")
+                .LabelNames("method")
+                .Register();
+
+            gauge.Labels("GET").Value = 974;
+            gauge.Labels("POST").Value = 823;
+
+            gauge.ReplaceValues(new Dictionary<string[], double>()
+            {
+                { new[] { "POST" }, 151 },
+                { new[] { "HEAD" }, 673 },
+            });
+
+            var memstream = new MemoryStream();
+            await metrics.Expose(memstream);
+
+            var lines = UTF8.GetString(memstream.ToArray()).Split('\n');
+
+            Assert.Equal(1, lines.Count(s => s == "# HELP test_gauge_total This is the help"));
+            Assert.Equal(1, lines.Count(s => s == "# TYPE test_gauge_total gauge"));
+            Assert.Equal(1, lines.Count(s => Regex.IsMatch(s, "test_gauge_total{method=\"POST\"} 151 [0-9]+")));
+            Assert.Equal(1, lines.Count(s => Regex.IsMatch(s, "test_gauge_total{method=\"HEAD\"} 673 [0-9]+")));
+
+            Assert.Equal(0, lines.Count(s => Regex.IsMatch(s, "test_gauge_total{method=\"GET\"} 974 [0-9]+")));        
+        }
+
         [Fact]
         public async Task LabelledLinearHistogram_metrics_are_exposed_correctly()
         {
