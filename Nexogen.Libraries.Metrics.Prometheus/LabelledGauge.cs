@@ -36,26 +36,26 @@ namespace Nexogen.Libraries.Metrics.Prometheus
                 key => new Gauge(help, name, labelNames, key));
         }
 
-        public void ReplaceValues(IDictionary<string[], double> newValues)
+        public void ReplaceMetricValues(IDictionary<string[], double> newMetricValues)
         {
-            if (newValues == null)
+            if (newMetricValues == null)
             {
-                throw new ArgumentNullException(nameof(newValues));
+                throw new ArgumentNullException(nameof(newMetricValues));
             }
 
-            if (newValues.Keys.Any(x => x.Length != labelNames.Length))
+            if (newMetricValues.Keys.Any(x => x.Length != labelNames.Length))
             {
                 throw new ArgumentException($"The number of labels should be equal to the number of label names for all value");
             }
 
             var newChildren = new ConcurrentDictionary<string[], Gauge>(new StringArrayComparer());
 
-            foreach (var newValue in newValues)
+            foreach (var newMetricValue in newMetricValues)
             {
-                var gauge = newChildren.GetOrAdd(newValue.Key.Select(l => EscapeLabel(l)).ToArray(),
+                var gauge = newChildren.GetOrAdd(newMetricValue.Key.Select(l => EscapeLabel(l)).ToArray(),
                     key => new Gauge(help, name, labelNames, key));
 
-                gauge.Value = newValue.Value;
+                gauge.Value = newMetricValue.Value;
             }
 
             this.children = newChildren;

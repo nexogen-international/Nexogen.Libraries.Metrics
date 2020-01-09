@@ -361,7 +361,7 @@ namespace Nexogen.Libraries.Metrics.UnitTests.Prometheus
             gauge.Labels("GET").Value = 974;
             gauge.Labels("POST").Value = 823;
 
-            gauge.ReplaceValues(new Dictionary<string[], double>()
+            gauge.ReplaceMetricValues(new Dictionary<string[], double>()
             {
                 { new[] { "POST" }, 151 },
                 { new[] { "HEAD" }, 673 },

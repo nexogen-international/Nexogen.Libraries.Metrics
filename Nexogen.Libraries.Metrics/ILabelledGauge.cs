@@ -34,10 +34,10 @@ namespace Nexogen.Libraries.Metrics
         /// whole set and deprecate old values in the same time. 
         /// The update operation happens as an atomic operation.
         /// </summary>
-        /// <param name="newValues">the new values with labels. </param>
+        /// <param name="newMetricValues">the new values with labels. </param>
         /// <returns>Nothing.</returns>
         /// <exception cref="ArgumentNullException">if newValues is null</exception>
         /// <exception cref="ArgumentException">if label count doesn't match with the defined labels.</exception>
-        void ReplaceValues(IDictionary<string[], double> newValues);
+        void ReplaceMetricValues(IDictionary<string[], double> newMetricValues);
     }
 }
