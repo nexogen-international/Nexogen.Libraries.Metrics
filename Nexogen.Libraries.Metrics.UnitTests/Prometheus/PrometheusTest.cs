@@ -58,7 +58,6 @@ namespace Nexogen.Libraries.Metrics.UnitTests.Prometheus
         [Theory]
         [InlineData("name", "111")]
         [InlineData(" ", "good", "well")]
-        [InlineData()]
         public void AreValidNames_should_return_false_when_one_of_the_names_is_invalid(params string[] name)
         {
             Assert.False(PrometheusConventions.AreValidNames(name));
