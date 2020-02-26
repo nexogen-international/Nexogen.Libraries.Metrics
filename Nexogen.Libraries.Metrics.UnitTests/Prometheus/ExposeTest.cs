@@ -718,7 +718,7 @@ namespace Nexogen.Libraries.Metrics.UnitTests.Prometheus
             Assert.Equal(1, lines.Count(s => s == "test_histogram_bucket{le=\"3.14159\"} 2"));
             Assert.Equal(1, lines.Count(s => s == "test_histogram_bucket{le=\"9\"} 2"));
             Assert.Equal(1, lines.Count(s => s == "test_histogram_bucket{le=\"+Inf\"} 2"));
-            Assert.Equal(1, lines.Count(s => s == "test_histogram_sum 2.69"));
+            Assert.Equal(1, lines.Count(s => s == "test_histogram_sum 2.6900000000000004"));
             Assert.Equal(1, lines.Count(s => s == "test_histogram_count 2"));
         }
 
@@ -749,7 +749,7 @@ namespace Nexogen.Libraries.Metrics.UnitTests.Prometheus
             Assert.Equal(1, lines.Count(s => s == "test_histogram_bucket{dolor=\"sit amet\", le=\"3.14159\"} 2"));
             Assert.Equal(1, lines.Count(s => s == "test_histogram_bucket{dolor=\"sit amet\", le=\"9\"} 2"));
             Assert.Equal(1, lines.Count(s => s == "test_histogram_bucket{dolor=\"sit amet\", le=\"+Inf\"} 2"));
-            Assert.Equal(1, lines.Count(s => s == "test_histogram_sum{dolor=\"sit amet\"} 2.69"));
+            Assert.Equal(1, lines.Count(s => s == "test_histogram_sum{dolor=\"sit amet\"} 2.6900000000000004"));
             Assert.Equal(1, lines.Count(s => s == "test_histogram_count{dolor=\"sit amet\"} 2"));
         }
     }
