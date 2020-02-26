@@ -1,13 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27004.2009
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nexogen.Libraries.Metrics", "Nexogen.Libraries.Metrics\Nexogen.Libraries.Metrics.csproj", "{8F423DC2-7CC3-4850-84F2-0193CCC42BA1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nexogen.Libraries.Metrics.Example", "Nexogen.Libraries.Metrics.Example\Nexogen.Libraries.Metrics.Example.csproj", "{8D9D59C9-46C7-4A36-BD96-1F2D90CE3926}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nexogen.Libraries.Metrics.ExampleWeb", "Nexogen.Libraries.Metrics.ExampleWeb\Nexogen.Libraries.Metrics.ExampleWeb.csproj", "{FF2B3539-9E59-462C-A011-EAC4DC5BE054}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nexogen.Libraries.Metrics.Extensions", "Nexogen.Libraries.Metrics.Extensions\Nexogen.Libraries.Metrics.Extensions.csproj", "{6543B8FE-B658-47A2-B693-7AF868D9A1EB}"
 EndProject
@@ -20,7 +18,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nexogen.Libraries.Metrics.Prometheus.PushGateway", "Nexogen.Libraries.Metrics.Prometheus.PushGateway\Nexogen.Libraries.Metrics.Prometheus.PushGateway.csproj", "{0198B66E-9667-44C5-9CEB-B3D214DC6880}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nexogen.Libraries.Metrics.Prometheus.AspCore.UnitTests", "Nexogen.Libraries.Metrics.Prometheus.AspCore.UnitTests\Nexogen.Libraries.Metrics.Prometheus.AspCore.UnitTests.csproj", "{78427E81-8DB2-4E45-B5B9-F1378C9DAA2C}"
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nexogen.Libraries.Metrics.Prometheus.Standalone", "Nexogen.Libraries.Metrics.Prometheus.Standalone\Nexogen.Libraries.Metrics.Prometheus.Standalone.csproj", "{D1800B6B-56EB-496E-AD09-473F215D350C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nexogen.Libraries.Metrics.Prometheus.Standalone", "Nexogen.Libraries.Metrics.Prometheus.Standalone\Nexogen.Libraries.Metrics.Prometheus.Standalone.csproj", "{D1800B6B-56EB-496E-AD09-473F215D350C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,10 +35,6 @@ Global
 		{8D9D59C9-46C7-4A36-BD96-1F2D90CE3926}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8D9D59C9-46C7-4A36-BD96-1F2D90CE3926}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8D9D59C9-46C7-4A36-BD96-1F2D90CE3926}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FF2B3539-9E59-462C-A011-EAC4DC5BE054}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FF2B3539-9E59-462C-A011-EAC4DC5BE054}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FF2B3539-9E59-462C-A011-EAC4DC5BE054}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FF2B3539-9E59-462C-A011-EAC4DC5BE054}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6543B8FE-B658-47A2-B693-7AF868D9A1EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6543B8FE-B658-47A2-B693-7AF868D9A1EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6543B8FE-B658-47A2-B693-7AF868D9A1EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
