@@ -4,7 +4,7 @@ os:
 
 # .NET CLI require Ubuntu 14.04
 sudo: required
-dist: trusty
+dist: xenial
 # Ensure that .NET Core is installed
 dotnet: 3.1.102
 # Ensure that Mono is not installed
