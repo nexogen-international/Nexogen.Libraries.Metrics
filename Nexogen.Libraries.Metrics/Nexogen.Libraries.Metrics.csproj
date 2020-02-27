@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <VersionPrefix>$(PackageVersionNumber)</VersionPrefix>
-    <TargetFramework>netstandard2.1</TargetFramework>
+    <TargetFramework>netstandard1.6</TargetFramework>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   
     <Description>Nexogen Metrics collector API</Description>
