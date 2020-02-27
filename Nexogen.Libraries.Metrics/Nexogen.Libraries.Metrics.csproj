@@ -2,19 +2,14 @@
 
   <PropertyGroup>
     <VersionPrefix>$(PackageVersionNumber)</VersionPrefix>
-    <TargetFramework Condition=" '$(OS)' != 'Windows_NT' ">netstandard1.6</TargetFramework>
-    <TargetFrameworks Condition=" '$(OS)' == 'Windows_NT' ">netstandard1.6;net452</TargetFrameworks>  
+    <TargetFramework>netstandard1.6</TargetFramework>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   
     <Description>Nexogen Metrics collector API</Description>
     <PackageTags>Metrics</PackageTags>
     <PackageIconUrl>https://raw.githubusercontent.com/nexogen-international/Nexogen.Libraries.Metrics/master/icon.png</PackageIconUrl>
     <Authors>Nexogen</Authors>
-    <Copyright>Nexogen 2017</Copyright>    
+    <Copyright>Nexogen 2020</Copyright>    
   </PropertyGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.6' ">
-    <PackageReference Include="System.IO" Version="4.3.0" />
-  </ItemGroup>
 
 </Project>

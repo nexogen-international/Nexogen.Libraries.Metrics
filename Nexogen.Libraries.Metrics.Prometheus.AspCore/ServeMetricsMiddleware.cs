@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Nexogen.Libraries.Metrics.Prometheus.AspCore
@@ -25,7 +23,7 @@ namespace Nexogen.Libraries.Metrics.Prometheus.AspCore
             context.Response.StatusCode = 200;
             context.Response.Headers["Content-Type"] = "text/plain; version=0.0.4; charset=utf-8";
 
-            using (var writer = new StreamWriter(context.Response.Body, PrometheusConventions.PrometheusEncoding, 128, true))
+            await using (var writer = new StreamWriter(context.Response.Body, PrometheusConventions.PrometheusEncoding, 128, true))
             {
                 writer.NewLine = "\n";
 

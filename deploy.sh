@@ -12,7 +12,6 @@ else
 fi
 
 $BUILD ./Nexogen.Libraries.Metrics
-$BUILD ./Nexogen.Libraries.Metrics
 $BUILD ./Nexogen.Libraries.Metrics.Extensions
 $BUILD ./Nexogen.Libraries.Metrics.Prometheus
 $BUILD ./Nexogen.Libraries.Metrics.Prometheus.AspCore
