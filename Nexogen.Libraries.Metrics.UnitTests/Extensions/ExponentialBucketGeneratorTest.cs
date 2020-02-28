@@ -68,7 +68,7 @@ namespace Nexogen.Libraries.Metrics.UnitTests.Extensions
 
             var buckets = generator.ExponentialBuckets(1, 10, 1);
 
-            buckets.ShouldAllBeEquivalentTo(expectedBuckets);
+            buckets.Should().BeEquivalentTo(expectedBuckets);
         }
 
         [Fact]
@@ -83,7 +83,7 @@ namespace Nexogen.Libraries.Metrics.UnitTests.Extensions
 
             var buckets = generator.ExponentialBuckets(1, 10, 3);
 
-            buckets.ShouldAllBeEquivalentTo(expectedBuckets);
+            buckets.Should().BeEquivalentTo(expectedBuckets);
         }
 
     }

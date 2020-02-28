@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <VersionPrefix>$(PackageVersionNumber)</VersionPrefix>
-    <TargetFramework>netstandard1.6</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     
     <Description>Nexogen Metrics Prometheus PushGateway</Description>
@@ -11,10 +11,6 @@
     <Authors>Nexogen</Authors>
     <Copyright>Nexogen 2017</Copyright>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="System.Net.Http" Version="4.3.3" />
-  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Nexogen.Libraries.Metrics.Prometheus\Nexogen.Libraries.Metrics.Prometheus.csproj" />
