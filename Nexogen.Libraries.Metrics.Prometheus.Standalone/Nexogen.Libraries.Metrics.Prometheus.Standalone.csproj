@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <VersionPrefix>$(PackageVersionNumber)</VersionPrefix>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+
+    <Description>Standalone Prometheus exporter for Nexogen Metrics</Description>
+    <PackageTags>Metrics;Prometheus;Standalone</PackageTags>
+    <PackageIconUrl>https://raw.githubusercontent.com/nexogen-international/Nexogen.Libraries.Metrics/master/icon.png</PackageIconUrl>
+    <Authors>Nexogen</Authors>
+    <Copyright>Nexogen 2020</Copyright>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="3.1.2" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.1.2" />
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="3.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Nexogen.Libraries.Metrics.Prometheus\Nexogen.Libraries.Metrics.Prometheus.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -145,6 +145,15 @@ dotnet add package Nexogen.Libraries.Metrics.Prometheus.Standalone
 ```
 
 ```cs
+public void ConfigureServices(IServiceCollection services)
+{
+    services.AddPrometheusStandalone(Configuration.GetSection("Prometheus"));
+}
+```
+
+or
+
+```cs 
 var metrics = new PrometheusMetrics();
-metrics.Server().Port(9100).Start();
+await new PrometheusServer(new PrometheusServerOptions {Port = 9100}, metrics, loggerFactory).StartAsync();
 ```
