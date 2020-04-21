@@ -157,3 +157,25 @@ or
 var metrics = new PrometheusMetrics();
 await new PrometheusServer(new PrometheusServerOptions {Port = 9100}, metrics, loggerFactory).StartAsync();
 ```
+
+## gRPC
+
+We provide gRPC interceptors for capturing metrics.
+
+```sh
+dotnet add package Nexogen.Libraries.Metrics.Prometheus.Grpc
+```
+
+For gRPC servers:
+
+```csharp
+services.AddSingleton<ServerMetrics>()
+        .AddGrpc(options => options.Interceptors.Add<ServerMetricsInterceptor>());
+```
+
+For gRPC clients:
+
+```csharp
+services.AddSingleton<ClientMetrics>()
+        .AddGrpcClient<T>((provider, options) => options.Interceptors.Add(new ClientMetricsInterceptor(provider.GetRequiredService<IMetrics>())));
+```
