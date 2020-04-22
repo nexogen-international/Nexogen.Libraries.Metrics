@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <VersionPrefix>$(PackageVersionNumber)</VersionPrefix>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>8</LangVersion>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  
+    <Description>gRPC metrics collector for Nexogen Metrics API implementation for Prometheus</Description>
+    <PackageTags>Metrics;Prometheus;gRPC</PackageTags>
+    <PackageIconUrl>https://raw.githubusercontent.com/nexogen-international/Nexogen.Libraries.Metrics/master/icon.png</PackageIconUrl>
+    <Authors>Nexogen</Authors>
+    <Copyright>Nexogen 2020</Copyright>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Nexogen.Libraries.Metrics\Nexogen.Libraries.Metrics.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Grpc.Core.Api" Version="2.28.1" />
+  </ItemGroup>
+  
+</Project>
