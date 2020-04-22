@@ -26,4 +26,4 @@ jobs:
     - name: Build
       run: dotnet build --configuration Release --no-restore
     - name: Test
-      run: cd ./Nexogen.Libraries.Metrics.UnitTests && dotnet test --no-restore --verbosity normal
+      run: cd ./Nexogen.Libraries.Metrics.UnitTests && dotnet test --no-restore
