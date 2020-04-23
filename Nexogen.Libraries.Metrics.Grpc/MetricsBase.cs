@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using Grpc.Core;
 
-namespace Nexogen.Libraries.Metrics.Prometheus.Grpc
+namespace Nexogen.Libraries.Metrics.Grpc
 {
     /// <summary>
     /// Common base class for gRPC-related metrics.

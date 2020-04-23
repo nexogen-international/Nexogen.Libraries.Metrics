@@ -1,4 +1,4 @@
-﻿namespace Nexogen.Libraries.Metrics.Prometheus.Grpc
+﻿namespace Nexogen.Libraries.Metrics.Grpc
 {
     /// <summary>
     /// Metrics for gRPC servers.

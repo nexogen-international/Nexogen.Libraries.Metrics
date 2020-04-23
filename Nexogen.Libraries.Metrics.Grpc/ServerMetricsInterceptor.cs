@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
 using Grpc.Core;
 using Grpc.Core.Interceptors;
-using Nexogen.Libraries.Metrics.Prometheus.Grpc.Internal;
+using Nexogen.Libraries.Metrics.Grpc.Internal;
 
-namespace Nexogen.Libraries.Metrics.Prometheus.Grpc
+namespace Nexogen.Libraries.Metrics.Grpc
 {
     /// <summary>
     /// gRPC server interceptor for collecting Prometheus metrics.

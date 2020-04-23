@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Grpc.Core;
 
-namespace Nexogen.Libraries.Metrics.Prometheus.Grpc.Internal
+namespace Nexogen.Libraries.Metrics.Grpc.Internal
 {
     internal class CountingStreamWriter<T> : IServerStreamWriter<T> 
     {
