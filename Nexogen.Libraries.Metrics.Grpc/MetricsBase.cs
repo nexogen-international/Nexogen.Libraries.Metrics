@@ -90,7 +90,10 @@ namespace Nexogen.Libraries.Metrics.Grpc
 
         private static string[] GetLabels(MethodType type, string method)
         {
-            var split = method.Split('/');
+            var split = method.Split('.');
+            string serviceName = string.Join(".", split.Take(split.Length - 1));
+            string methodName = split.Last();
+            
             return new[]
             {
                 type switch
@@ -101,8 +104,8 @@ namespace Nexogen.Libraries.Metrics.Grpc
                     MethodType.DuplexStreaming => "bidi_stream",
                     _ => "unknown"
                 },
-                split[0],
-                split[1]
+                serviceName,
+                methodName
             };
         }
 
