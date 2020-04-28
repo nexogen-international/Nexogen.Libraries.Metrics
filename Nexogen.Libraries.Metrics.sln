@@ -21,6 +21,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nexogen.Libraries.Metrics.P
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nexogen.Libraries.Metrics.Grpc", "Nexogen.Libraries.Metrics.Grpc\Nexogen.Libraries.Metrics.Grpc.csproj", "{0E151DA3-2560-4F5D-A2C4-C7174C2C30EB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nexogen.Libraries.Metrics.Grpc.UnitTests", "Nexogen.Libraries.Metrics.Grpc.UnitTests\Nexogen.Libraries.Metrics.Grpc.UnitTests.csproj", "{80831F51-EA13-4A32-9178-6FD7EADA4B12}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{0E151DA3-2560-4F5D-A2C4-C7174C2C30EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0E151DA3-2560-4F5D-A2C4-C7174C2C30EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0E151DA3-2560-4F5D-A2C4-C7174C2C30EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{80831F51-EA13-4A32-9178-6FD7EADA4B12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80831F51-EA13-4A32-9178-6FD7EADA4B12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80831F51-EA13-4A32-9178-6FD7EADA4B12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80831F51-EA13-4A32-9178-6FD7EADA4B12}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

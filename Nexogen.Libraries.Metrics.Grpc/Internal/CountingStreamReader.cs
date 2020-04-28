@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Grpc.Core;
 
-namespace Nexogen.Libraries.Metrics.Prometheus.Grpc.Internal
+namespace Nexogen.Libraries.Metrics.Grpc.Internal
 {
     internal class CountingStreamReader<T> : IAsyncStreamReader<T>
         where T : class

@@ -169,13 +169,13 @@ dotnet add package Nexogen.Libraries.Metrics.Prometheus.Grpc
 For gRPC servers:
 
 ```csharp
-services.AddSingleton<ServerMetrics>()
+services.AddSingleton<IGrpcServerMetrics, GrpcServerMetrics>()
         .AddGrpc(options => options.Interceptors.Add<ServerMetricsInterceptor>());
 ```
 
 For gRPC clients:
 
 ```csharp
-services.AddSingleton<ClientMetrics>()
+services.AddSingleton<IGrpcClientMetrics, GrpcClientMetrics>()
         .AddGrpcClient<T>((provider, options) => options.Interceptors.Add(new ClientMetricsInterceptor(provider.GetRequiredService<IMetrics>())));
 ```

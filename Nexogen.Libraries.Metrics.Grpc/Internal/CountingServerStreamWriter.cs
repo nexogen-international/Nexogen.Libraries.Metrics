@@ -2,14 +2,14 @@
 using System.Threading.Tasks;
 using Grpc.Core;
 
-namespace Nexogen.Libraries.Metrics.Prometheus.Grpc.Internal
+namespace Nexogen.Libraries.Metrics.Grpc.Internal
 {
-    internal class CountingStreamWriter<T> : IServerStreamWriter<T> 
+    internal class CountingServerStreamWriter<T> : IServerStreamWriter<T> 
     {
         private readonly IServerStreamWriter<T> innerStream;
         private readonly Action callback;
 
-        public CountingStreamWriter(IServerStreamWriter<T> innerStream, Action callback)
+        public CountingServerStreamWriter(IServerStreamWriter<T> innerStream, Action callback)
         {
             this.innerStream = innerStream;
             this.callback = callback;
