@@ -1,12 +1,11 @@
-﻿using System.Linq;
-using Grpc.Core;
+﻿using Grpc.Core;
 
 namespace Nexogen.Libraries.Metrics.Grpc
 {
     /// <summary>
     /// Common base class for gRPC-related metrics.
     /// </summary>
-    public abstract class MetricsBase
+    public abstract class GrpcMetricsBase : IGrpcMetricsBase
     {
         private static readonly string[] labelNames = {"grpc_type", "grpc_service", "grpc_method"};
         private static readonly string[] labelNamesWithCode = {"grpc_type", "grpc_service", "grpc_method", "grpc_code"};
@@ -16,7 +15,7 @@ namespace Nexogen.Libraries.Metrics.Grpc
         /// </summary>
         /// <param name="metrics">Builder to register the metrics in.</param>
         /// <param name="kind">The kind of metrics: server or client.</param>
-        protected MetricsBase(IMetrics metrics, string kind)
+        protected GrpcMetricsBase(IMetrics metrics, string kind)
         {
             started = metrics
                 .Counter()
@@ -54,8 +53,8 @@ namespace Nexogen.Libraries.Metrics.Grpc
         /// </summary>
         /// <param name="type">The type of RPC method.</param>
         /// <param name="method">The full gRPC method name (including the service name).</param>
-        public void Started(MethodType type, string method)
-            => started.Labels(GetLabels(type, method)).Increment();
+        public void Started(MethodType type, string service, string method)
+            => started.Labels(ToLabel(type), service, method).Increment();
 
         private readonly ILabelledCounter handled;
 
@@ -65,8 +64,8 @@ namespace Nexogen.Libraries.Metrics.Grpc
         /// <param name="type">The type of RPC method.</param>
         /// <param name="method">The full gRPC method name (including the service name).</param>
         /// <param name="statusCode">The gRPC status code.</param>
-        public void Handled(MethodType type, string method, StatusCode statusCode)
-            => handled.Labels(GetLabels(type, method, statusCode)).Increment();
+        public void Handled(MethodType type, string service, string method, StatusCode statusCode)
+            => handled.Labels(ToLabel(type), service, method, statusCode.ToString()).Increment();
 
         private readonly ILabelledCounter streamMsgReceived;
 
@@ -75,8 +74,8 @@ namespace Nexogen.Libraries.Metrics.Grpc
         /// </summary>
         /// <param name="type">The type of RPC method.</param>
         /// <param name="method">The full gRPC method name (including the service name).</param>
-        public void StreamMsgReceived(MethodType type, string method)
-            => streamMsgReceived.Labels(GetLabels(type, method)).Increment();
+        public void StreamMsgReceived(MethodType type, string service, string method)
+            => streamMsgReceived.Labels(ToLabel(type), service, method).Increment();
 
         private readonly ILabelledCounter streamMsgSent;
 
@@ -85,31 +84,17 @@ namespace Nexogen.Libraries.Metrics.Grpc
         /// </summary>
         /// <param name="type">The type of RPC method.</param>
         /// <param name="method">The full gRPC method name (including the service name).</param>
-        public void StreamMsgSent(MethodType type, string method)
-            => streamMsgSent.Labels(GetLabels(type, method)).Increment();
+        public void StreamMsgSent(MethodType type, string service, string method)
+            => streamMsgSent.Labels(ToLabel(type), service, method).Increment();
 
-        private static string[] GetLabels(MethodType type, string method)
-        {
-            var split = method.Split('.');
-            string serviceName = string.Join(".", split.Take(split.Length - 1));
-            string methodName = split.Last();
-            
-            return new[]
+        private static string ToLabel(MethodType type) =>
+            type switch
             {
-                type switch
-                {
-                    MethodType.Unary => "unary",
-                    MethodType.ClientStreaming => "client_stream",
-                    MethodType.ServerStreaming => "server_stream",
-                    MethodType.DuplexStreaming => "bidi_stream",
-                    _ => "unknown"
-                },
-                serviceName,
-                methodName
+                MethodType.Unary => "unary",
+                MethodType.ClientStreaming => "client_stream",
+                MethodType.ServerStreaming => "server_stream",
+                MethodType.DuplexStreaming => "bidi_stream",
+                _ => "unknown"
             };
-        }
-
-        private string[] GetLabels(MethodType type, string method, StatusCode statusCode)
-            => GetLabels(type, method).Append(statusCode.ToString()).ToArray();
     }
 }

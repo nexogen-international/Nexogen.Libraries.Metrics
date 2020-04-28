@@ -3,13 +3,13 @@
     /// <summary>
     /// Metrics for gRPC clients.
     /// </summary>
-    public class ClientMetrics : MetricsBase
+    public class GrpcClientMetrics : GrpcMetricsBase, IGrpcClientMetrics
     {
         /// <summary>
         /// Registers gRPC client metrics.
         /// </summary>
         /// <param name="metrics">Builder to register the metrics in.</param>
-        public ClientMetrics(IMetrics metrics) : base(metrics, kind: "client")
+        public GrpcClientMetrics(IMetrics metrics) : base(metrics, kind: "client")
         {}
     }
 }

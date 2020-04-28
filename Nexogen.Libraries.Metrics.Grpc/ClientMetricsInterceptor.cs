@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Grpc.Core;
+﻿using Grpc.Core;
 using Grpc.Core.Interceptors;
 using Nexogen.Libraries.Metrics.Grpc.Internal;
 
@@ -10,103 +9,111 @@ namespace Nexogen.Libraries.Metrics.Grpc
     /// </summary>
     public class ClientMetricsInterceptor : Interceptor
     {
-        private ClientMetrics metrics;
+        private IGrpcClientMetrics metrics;
 
         /// <summary>
         /// Creates a gRPC client interceptor for collecting Prometheus metrics.
         /// </summary>
-        public ClientMetricsInterceptor(ClientMetrics metrics)
+        public ClientMetricsInterceptor(IGrpcClientMetrics metrics)
         {
             this.metrics = metrics;
         }
 
-        public override async Task<TResponse> UnaryServerHandler<TRequest, TResponse>(TRequest request, ServerCallContext context, UnaryServerMethod<TRequest, TResponse> continuation)
+        public override TResponse BlockingUnaryCall<TRequest, TResponse>(TRequest request, ClientInterceptorContext<TRequest, TResponse> context, BlockingUnaryCallContinuation<TRequest, TResponse> continuation)
         {
-            metrics.Started(MethodType.Unary, context.Method);
+            Started(MethodType.Unary, context);
             try
             {
-                var response = await continuation(request, context);
-                metrics.Handled(MethodType.Unary, context.Method, StatusCode.OK);
+                var response = base.BlockingUnaryCall(request, context, continuation);
+                Handled(MethodType.Unary, context, StatusCode.OK);
                 return response;
             }
             catch (RpcException ex)
             {
-                metrics.Handled(MethodType.Unary, context.Method, ex.StatusCode);
+                Handled(MethodType.Unary, context, ex.StatusCode);
                 throw;
             }
             catch
             {
-                metrics.Handled(MethodType.Unary, context.Method, StatusCode.Internal);
+                Handled(MethodType.Unary, context, StatusCode.Internal);
                 throw;
             }
         }
 
-        public override async Task<TResponse> ClientStreamingServerHandler<TRequest, TResponse>(IAsyncStreamReader<TRequest> requestStream, ServerCallContext context, ClientStreamingServerMethod<TRequest, TResponse> continuation)
+        public override AsyncUnaryCall<TResponse> AsyncUnaryCall<TRequest, TResponse>(TRequest request, ClientInterceptorContext<TRequest, TResponse> context, AsyncUnaryCallContinuation<TRequest, TResponse> continuation)
         {
-            metrics.Started(MethodType.ClientStreaming, context.Method);
-            try
-            {
-                var response = await continuation(
-                    new CountingStreamReader<TRequest>(requestStream, () => metrics.StreamMsgSent(MethodType.ClientStreaming, context.Method)),
-                    context);
-                metrics.Handled(MethodType.ClientStreaming, context.Method, StatusCode.OK);
-                return response;
-            }
-            catch (RpcException ex)
-            {
-                metrics.Handled(MethodType.ClientStreaming, context.Method, ex.StatusCode);
-                throw;
-            }
-            catch
-            {
-                metrics.Handled(MethodType.ClientStreaming, context.Method, StatusCode.Internal);
-                throw;
-            }
+            Started(MethodType.Unary, context);
+            var call = continuation(request, context);
+            return new AsyncUnaryCall<TResponse>(
+                call.ResponseAsync.ContinueWith(task =>
+                {
+                    Handled(MethodType.Unary, context, call.GetStatus().StatusCode);
+                    return task.Result;
+                }),
+                call.ResponseHeadersAsync, call.GetStatus, call.GetTrailers, call.Dispose);
         }
 
-        public override async Task ServerStreamingServerHandler<TRequest, TResponse>(TRequest request, IServerStreamWriter<TResponse> responseStream, ServerCallContext context, ServerStreamingServerMethod<TRequest, TResponse> continuation)
+        public override AsyncClientStreamingCall<TRequest, TResponse> AsyncClientStreamingCall<TRequest, TResponse>(ClientInterceptorContext<TRequest, TResponse> context, AsyncClientStreamingCallContinuation<TRequest, TResponse> continuation)
         {
-            metrics.Started(MethodType.ServerStreaming, context.Method);
-            try
-            {
-                await continuation(request,
-                    new CountingStreamWriter<TResponse>(responseStream, () => metrics.StreamMsgReceived(MethodType.ServerStreaming, context.Method)),
-                    context);
-                metrics.Handled(MethodType.ServerStreaming, context.Method, StatusCode.OK);
-            }
-            catch (RpcException ex)
-            {
-                metrics.Handled(MethodType.ServerStreaming, context.Method, ex.StatusCode);
-                throw;
-            }
-            catch
-            {
-                metrics.Handled(MethodType.ServerStreaming, context.Method, StatusCode.Internal);
-                throw;
-            }
+            Started(MethodType.ClientStreaming, context);
+            var call = continuation(context);
+            return new AsyncClientStreamingCall<TRequest, TResponse>(
+                new CountingClientStreamWriter<TRequest>(call.RequestStream, () => StreamMsgSent(MethodType.ClientStreaming, context)),
+                call.ResponseAsync.ContinueWith(task =>
+                {
+                    Handled(MethodType.ClientStreaming, context, call.GetStatus().StatusCode);
+                    return task.Result;
+                }),
+                call.ResponseHeadersAsync, call.GetStatus, call.GetTrailers, call.Dispose);
         }
 
-        public override async Task DuplexStreamingServerHandler<TRequest, TResponse>(IAsyncStreamReader<TRequest> requestStream, IServerStreamWriter<TResponse> responseStream, ServerCallContext context, DuplexStreamingServerMethod<TRequest, TResponse> continuation)
+        public override AsyncServerStreamingCall<TResponse> AsyncServerStreamingCall<TRequest, TResponse>(TRequest request, ClientInterceptorContext<TRequest, TResponse> context, AsyncServerStreamingCallContinuation<TRequest, TResponse> continuation)
         {
-            metrics.Started(MethodType.DuplexStreaming, context.Method);
-            try
-            {
-                await continuation(
-                    new CountingStreamReader<TRequest>(requestStream, () => metrics.StreamMsgSent(MethodType.DuplexStreaming, context.Method)),
-                    new CountingStreamWriter<TResponse>(responseStream, () => metrics.StreamMsgReceived(MethodType.DuplexStreaming, context.Method)),
-                    context);
-                metrics.Handled(MethodType.DuplexStreaming, context.Method, StatusCode.OK);
-            }
-            catch (RpcException ex)
-            {
-                metrics.Handled(MethodType.DuplexStreaming, context.Method, ex.StatusCode);
-                throw;
-            }
-            catch
-            {
-                metrics.Handled(MethodType.DuplexStreaming, context.Method, StatusCode.Internal);
-                throw;
-            }
+            Started(MethodType.ServerStreaming, context);
+            var call = continuation(request, context);
+            return new AsyncServerStreamingCall<TResponse>(
+                new CountingStreamReader<TResponse>(call.ResponseStream, () => StreamMsgReceived(MethodType.ServerStreaming, context)),
+                call.ResponseHeadersAsync.ContinueWith(task =>
+                {
+                    Handled(MethodType.ServerStreaming, context, call.GetStatus().StatusCode);
+                    return task.Result;
+                }),
+                call.GetStatus, call.GetTrailers, call.Dispose);
         }
+
+        public override AsyncDuplexStreamingCall<TRequest, TResponse> AsyncDuplexStreamingCall<TRequest, TResponse>(ClientInterceptorContext<TRequest, TResponse> context, AsyncDuplexStreamingCallContinuation<TRequest, TResponse> continuation)
+        {
+            Started(MethodType.DuplexStreaming, context);
+            var call = continuation(context);
+            return new AsyncDuplexStreamingCall<TRequest, TResponse>(
+                new CountingClientStreamWriter<TRequest>(call.RequestStream, () => StreamMsgSent(MethodType.DuplexStreaming, context)),
+                new CountingStreamReader<TResponse>(call.ResponseStream, () => StreamMsgReceived(MethodType.DuplexStreaming, context)),
+                call.ResponseHeadersAsync.ContinueWith(task =>
+                {
+                    Handled(MethodType.DuplexStreaming, context, call.GetStatus().StatusCode);
+                    return task.Result;
+                }),
+                call.GetStatus, call.GetTrailers, call.Dispose);
+        }
+
+        private void Started<TRequest, TResponse>(MethodType type, ClientInterceptorContext<TRequest, TResponse> context)
+            where TRequest : class
+            where TResponse : class
+            => metrics.Started(type, context.Method.ServiceName, context.Method.Name);
+
+        private void Handled<TRequest, TResponse>(MethodType type, ClientInterceptorContext<TRequest, TResponse> context, StatusCode status)
+            where TRequest : class
+            where TResponse : class
+            => metrics.Handled(type, context.Method.ServiceName, context.Method.Name, status);
+
+        private void StreamMsgReceived<TRequest, TResponse>(MethodType type, ClientInterceptorContext<TRequest, TResponse> context)
+            where TRequest : class
+            where TResponse : class
+            => metrics.StreamMsgReceived(type, context.Method.ServiceName, context.Method.Name);
+
+        private void StreamMsgSent<TRequest, TResponse>(MethodType type, ClientInterceptorContext<TRequest, TResponse> context)
+            where TRequest : class
+            where TResponse : class
+            => metrics.StreamMsgSent(type, context.Method.ServiceName, context.Method.Name);
     }
 }
