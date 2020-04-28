@@ -177,5 +177,5 @@ For gRPC clients:
 
 ```csharp
 services.AddSingleton<IGrpcClientMetrics, GrpcClientMetrics>()
-        .AddGrpcClient<T>((provider, options) => options.Interceptors.Add(new ClientMetricsInterceptor(provider.GetRequiredService<IMetrics>())));
+        .AddGrpcClient<T>((provider, options) => options.Interceptors.Add(new ClientMetricsInterceptor(provider.GetRequiredService<IGrpcClientMetrics>())));
 ```
