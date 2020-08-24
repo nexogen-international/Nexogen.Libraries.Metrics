@@ -121,7 +121,7 @@ namespace Nexogen.Libraries.Metrics.Prometheus.PushGateway
 
         private HttpRequestMessage CreateRequestMessage(IExposable metrics, string job, Stream stream)
         {
-            var path = string.Format("/metrics/job/{0}", WebUtility.UrlEncode(job));
+            var path = string.Format("metrics/job/{0}", WebUtility.UrlEncode(job));
             
             if (!string.IsNullOrEmpty(instance))
             {
