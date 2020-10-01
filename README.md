@@ -14,7 +14,7 @@ Library for collecting application metrics in .Net and exporting them to [Promet
 
 [Nexogen.Libraries.Metrics API Reference](https://github.com/nexogen-international/Nexogen.Libraries.Metrics/wiki)
 
-# ⚠ Updating from version 2.6.0 or earlier ⚠
+# Updating from version 2.6.0 or earlier
 
 The default Prometheus metrics registration behavior in ASP.NET Core applications has changed.
 The request metrics collection is no longer enabled by default. This means that you need to add code to enable it. See the relevant section below for code samples.
