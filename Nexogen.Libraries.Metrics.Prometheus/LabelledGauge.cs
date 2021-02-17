@@ -15,7 +15,7 @@ namespace Nexogen.Libraries.Metrics.Prometheus
         private readonly string help;
         private readonly string[] labelNames;
 
-        private readonly ConcurrentDictionary<string[], Gauge> children = new ConcurrentDictionary<string[], Gauge>(new StringArrayComparer());
+        private ConcurrentDictionary<string[], Gauge> children = new ConcurrentDictionary<string[], Gauge>(new StringArrayComparer());
 
         public LabelledGauge(string help, string name, string[] labelNames)
         {
@@ -34,6 +34,31 @@ namespace Nexogen.Libraries.Metrics.Prometheus
             // if does not exist, create a new one
             return children.GetOrAdd(labels.Select(l => EscapeLabel(l)).ToArray(),
                 key => new Gauge(help, name, labelNames, key));
+        }
+
+        public void ReplaceMetricValues(IDictionary<string[], double> newMetricValues)
+        {
+            if (newMetricValues == null)
+            {
+                throw new ArgumentNullException(nameof(newMetricValues));
+            }
+
+            if (newMetricValues.Keys.Any(x => x.Length != labelNames.Length))
+            {
+                throw new ArgumentException($"The number of labels should be equal to the number of label names for all value");
+            }
+
+            var newChildren = new ConcurrentDictionary<string[], Gauge>(new StringArrayComparer());
+
+            foreach (var newMetricValue in newMetricValues)
+            {
+                var gauge = newChildren.GetOrAdd(newMetricValue.Key.Select(l => EscapeLabel(l)).ToArray(),
+                    key => new Gauge(help, name, labelNames, key));
+
+                gauge.Value = newMetricValue.Value;
+            }
+
+            this.children = newChildren;
         }
 
         public async Task ExposeText(TextWriter writer, ExposeOptions options)
