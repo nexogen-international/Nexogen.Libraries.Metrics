@@ -20,7 +20,7 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 8.0.13
+        dotnet-version: 8.0.406
     - name: Install dependencies
       run: dotnet restore
     - name: Build
