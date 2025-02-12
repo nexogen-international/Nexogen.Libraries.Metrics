@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using FluentAssertions;
+using Nexogen.Libraries.Metrics.Prometheus;
+using Nexogen.Libraries.Metrics.Prometheus.PushGateway;
+using System;
 using System.Net.Http;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
-using FluentAssertions;
-
-using Nexogen.Libraries.Metrics.Prometheus.PushGateway;
-using Nexogen.Libraries.Metrics.Prometheus;
 
 namespace Nexogen.Libraries.Metrics.UnitTests
 {
@@ -69,15 +66,15 @@ namespace Nexogen.Libraries.Metrics.UnitTests
         }
 
         [Fact]
-        public void Passing_null_to_PushAsync_throws_ArgumentNullException()
+        public async Task Passing_null_to_PushAsync_throws_ArgumentNullException()
         {
             var mh = new FakeMessageHandler();
             using (var pushgateway = new PushGateway(new HttpClient(mh) { BaseAddress = new Uri("http://example.com/") }))
             {
                 var m = new PrometheusMetrics();
 
-                Assert.ThrowsAsync<ArgumentNullException>(() => pushgateway.PushAsync(null, "jobname"));
-                Assert.ThrowsAsync<ArgumentNullException>(() => pushgateway.PushAsync(m, null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => pushgateway.PushAsync(null, "jobname"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => pushgateway.PushAsync(m, null));
             }
         }
     }

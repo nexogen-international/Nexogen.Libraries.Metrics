@@ -1,7 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Nexogen.Libraries.Metrics;
-using Nexogen.Libraries.Metrics.Prometheus;
 
 namespace Nexogen.Libraries.Metrics.Prometheus.Standalone
 {
